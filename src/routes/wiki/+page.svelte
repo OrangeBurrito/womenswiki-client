@@ -2,8 +2,6 @@
     import type { PageData } from './$types'
 
     export let data: PageData
-
-    console.log(data)
 </script>
 
 <h1>Articles</h1>
@@ -17,6 +15,5 @@
 <style>
     .article {
         display: block;
-        padding: 1rem;
     }
 </style>

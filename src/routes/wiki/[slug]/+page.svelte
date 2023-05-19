@@ -1,11 +1,16 @@
 <script lang="ts">
-	import type { PageData } from "./$types";
+	import { page } from "$app/stores";
+import type { PageData } from "./$types";
 
     export let data: PageData
+
+    let article = data.json.find((article: { slug: string; }) => {
+        return article.slug === $page.params.slug
+    })
 </script>
 
-{#if data.article}
-    <h2>{data.article.title}</h2>
+{#if article}
+    <h2>{article.title}</h2>
 {:else}
-    <h2>Article not found</h2>
+    <h2>Article Not Found</h2>
 {/if}

@@ -13,7 +13,7 @@
 </script>
 
 <input type="text" placeholder="Search for articles"
-    on:input={search}
+on:input={search}
 >
 
 {#if searchQuery.length > 0}
