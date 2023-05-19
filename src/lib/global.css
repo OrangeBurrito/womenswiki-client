@@ -1,0 +1,27 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+:root {
+    --font-body: system-ui, sans-serif;
+    --font-heading: 'Palatino Linotype', 'URW Palladio L', 'Palatino', P052, serif;
+}
+
+body {
+    font-family: var(--font-body);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    margin-bottom: 1rem;
+}
+
+a {
+    text-decoration: none;
+    color: #2D64F1;
+}
+
+a:visited {
+    color: #3C14EE;
+}

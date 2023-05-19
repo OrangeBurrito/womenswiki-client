@@ -6,7 +6,7 @@
 
 <h1>Articles</h1>
 
-{#each data.json as article}
+{#each data.articles as article}
     <a class="article" href={`/wiki/${article.slug}`}>
         <h2>{article.title}</h2>
     </a>
