@@ -13,7 +13,7 @@
 		<a href="/wiki">Articles</a>
 	</nav>
 
-	<SearchBar items={data.articles} />
+	<SearchBar />
 </header>
 
 <main>
