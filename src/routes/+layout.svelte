@@ -11,6 +11,7 @@
 	<nav>
 		<a href="/">Home</a>
 		<a href="/wiki">Articles</a>
+		<a href="/create_article">Create New Article</a>
 	</nav>
 
 	<SearchBar />

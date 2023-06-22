@@ -2,13 +2,16 @@
 	import Markdown from "$lib/components/Markdown.svelte"
 	import { debounce } from "$lib/util"
 	import { onMount } from "svelte"
+    import { applyAction, enhance } from "$app/forms"
+	import type { ActionData, SubmitFunction } from "./$types"
+
+    export let form: ActionData
 
     let articleText = ''
     let title = ''
 
     onMount(() => {
         ({ title, articleText } = JSON.parse(localStorage.getItem('articleEdit') ?? ''))
-        console.log(articleText)
     })
 
     const cacheArticleEdit = () => {
@@ -17,17 +20,36 @@
             articleText
         }))
     }
+    const submitArticle: SubmitFunction = () => {      
+        return async({result}) => {
+            await applyAction(result)
+            if (!form?.missingTitle && !form?.missingContent) {
+                console.log('it passes')
+                articleText = ''
+                title = ''
+                localStorage.removeItem('articleEdit')
+            }
+        }
+    }
 </script>
 
 <h2>Create New Article</h2>
 
 <div class="create-article">
-    <form action="">
+    <form method="POST" action="?/submitArticle" use:enhance={submitArticle}>
         <label for="title">Title</label>
-        <input type="text" id="title" bind:value={title} on:input={debounce(cacheArticleEdit, 400)}>
+        <input type="text" id="title" name="title" bind:value={title} on:input={debounce(cacheArticleEdit, 400)}>
+        {#if form?.missingTitle}
+            <p class="error">Title is required</p>
+        {/if}
 
         <label for="content">Content</label>
-        <textarea id="content" bind:value={articleText} on:input={debounce(cacheArticleEdit, 400)}></textarea>
+        <textarea id="content" name="content" bind:value={articleText} on:input={debounce(cacheArticleEdit, 400)}></textarea>
+        {#if form?.missingContent}
+            <p class="error">Content is required and must be at least 100 characters long</p>
+        {/if}
+
+        <button type="submit">Submit Article</button>
     </form>
     
     <div class="article-preview">
@@ -36,7 +58,6 @@
         <Markdown text={articleText} />
     </div>
 </div>
-<button>Submit Article</button>
 
 <style>
     .create-article {
