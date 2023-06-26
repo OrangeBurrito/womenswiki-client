@@ -7,7 +7,7 @@
 </script>
 
 {#if data.article}
-	<a href={`edit?article=${data.article.slug}`}>Edit Article</a>
+	<a href={`/edit_article/${data.article.id}?title=${data.article.title}`}>Edit Article</a>
 	<h2>{data.article.title}</h2>
 	<Markdown text={data.article.latestRevision.content}/>
 {:else}

@@ -1,1 +1,0 @@
-<h2>Edit Article</h2>
