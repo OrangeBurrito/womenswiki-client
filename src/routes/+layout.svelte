@@ -1,9 +1,6 @@
 <script lang="ts">
 	import '$lib/global.css'
 	import SearchBar from '$lib/components/SearchBar.svelte'
-	import type { PageData } from './$types'
-
-	export let data: PageData
 </script>
 
 <header>

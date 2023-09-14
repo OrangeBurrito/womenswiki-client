@@ -1,0 +1,10 @@
+query Articles {
+    articles(first: 10, order: [{createdAt: ASC}]) {
+      title
+      slug
+      createdAt
+      latestRevision {
+        content
+      }
+    }
+  }

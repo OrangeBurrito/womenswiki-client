@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { enhance } from "$app/forms"
 	import type { ActionData, PageData } from "./$types"
 
     let articleText = ''

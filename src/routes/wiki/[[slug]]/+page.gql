@@ -1,0 +1,11 @@
+query Article($slug: String! = "lorem_ipsum") {
+    article(slug: $slug) {
+        id
+        title
+        createdAt
+        latestRevision {
+          content
+          createdAt
+        }
+    }
+}
