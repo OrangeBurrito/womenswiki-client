@@ -12,6 +12,11 @@ const config = {
 		alias: {
 			$houdini: './$houdini',
 		}
+	},
+	vitePlugin: {
+		experimental: {
+			inspector: true,
+		}
 	}
 };
 

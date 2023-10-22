@@ -20,6 +20,7 @@
             articleText
         }))
     }
+    
     const submitArticle: SubmitFunction = () => {      
         return async({result}) => {
             await applyAction(result)

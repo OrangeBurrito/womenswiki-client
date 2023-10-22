@@ -7,5 +7,7 @@
 	$: ({Article} = data)
 </script>
 
-<h2>{$Article.data?.article?.title}</h2>
-<Markdown text={$Article.data?.article?.latestRevision.content}/>
+<article>
+	<h1>{$Article.data?.article?.title}</h1>
+	<Markdown text={$Article.data?.article?.latestRevision?.content}/>
+</article>
