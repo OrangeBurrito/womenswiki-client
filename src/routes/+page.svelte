@@ -10,12 +10,16 @@
     })
 </script>
 
-<h1>WomensWiki</h1>
-
 <h2>Articles</h2>
 
 {#if articles}
+<ul>
     {#each articles as article}
+    <li>
         <a href="/article/{article.id}">{article.title}</a>
+    </li>
     {/each}
+</ul>
 {/if}
+
+<a href="/article/create">Create An Article</a>
