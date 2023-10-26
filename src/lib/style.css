@@ -1,0 +1,31 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body {
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    line-height: 1.5;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Source Serif Pro', serif;
+    font-weight: 600;
+    line-height: 1;
+}
+
+pre, code {
+    font-family: 'Source Code Pro', monospace;
+}
+
+a, a:visited {
+    text-decoration: none;
+    border-bottom: 2.5px solid #2075d1;
+    color: inherit;
+}
+
+a:hover {
+    font-weight: 600;
+    border-width: 3.5px;
+    color: #2075d1;
+}

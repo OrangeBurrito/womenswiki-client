@@ -4,4 +4,9 @@
     export let data: PageServerData
 </script>
 
-<h1>{data.article.title}</h1>
+<article>
+    <h1>{data.article.title}</h1>
+    {@html data.article.content}
+</article>
+
+<a href={`/article/${data.article.id}/edit`}>Edit</a>

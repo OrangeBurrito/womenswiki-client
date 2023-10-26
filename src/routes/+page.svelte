@@ -6,7 +6,6 @@
     onMount(async () => {
         const res = await fetch('http://localhost:5161/articles')
         articles = await res.json()
-        console.log(articles)
     })
 </script>
 

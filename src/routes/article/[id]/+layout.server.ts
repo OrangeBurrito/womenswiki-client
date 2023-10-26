@@ -1,6 +1,6 @@
-import type { PageServerLoad } from './$types';
+import type { LayoutServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({params}) => {
+export const load: LayoutServerLoad = async ({params}) => {
     const res = await fetch(`http://localhost:5161/article/${params.id}`)
     const article = await res.json();
 
