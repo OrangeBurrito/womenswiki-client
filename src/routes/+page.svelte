@@ -15,7 +15,7 @@
 <ul>
     {#each articles as article}
     <li>
-        <a href="/article/{article.id}">{article.title}</a>
+        <a href="/article/{article.slug}" data-id={article.id}>{article.title}</a>
     </li>
     {/each}
 </ul>

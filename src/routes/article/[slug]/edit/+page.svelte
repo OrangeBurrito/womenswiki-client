@@ -2,15 +2,12 @@
 	import type { PageServerData } from "./$types";
 
     export let data: PageServerData
-
-    console.log(data)
 </script>
 
-<h1>Editing Article</h1>
+<h1>Editing {data.article.title}</h1>
 
 <form action="?/update" method="POST">
     <input type="hidden" id="id" name="id" value={data.article.id} />
-
     <div>
         <label for="content">Content</label>
         <textarea id="content" name="content" required>{data.article.content}</textarea>

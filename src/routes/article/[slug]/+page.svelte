@@ -9,4 +9,4 @@
     {@html data.article.content}
 </article>
 
-<a href={`/article/${data.article.id}/edit`}>Edit</a>
+<a href={`/article/${data.article.slug}/edit`}>Edit</a>

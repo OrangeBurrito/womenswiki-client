@@ -18,7 +18,7 @@ export const actions = {
         })
 
         const json = await res.json()
-        throw redirect(303, `/article/${json.id}`)
+        throw redirect(303, `/article/${json.slug}`)
     },
     delete: async ({request}) => {
         const data = await request.formData()

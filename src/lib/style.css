@@ -3,9 +3,17 @@
     margin: 0;
 }
 
+:root {
+    --accent: #8a4ec5;
+}
+
 body {
     font-family: 'IBM Plex Sans', system-ui, sans-serif;
     line-height: 1.5;
+}
+
+p {
+    line-height: 1.6;
 }
 
 h1, h2, h3, h4 {
@@ -20,12 +28,24 @@ pre, code {
 
 a, a:visited {
     text-decoration: none;
-    border-bottom: 2.5px solid #2075d1;
+    border-bottom: 2.5px solid var(--accent);
     color: inherit;
 }
 
 a:hover {
     font-weight: 600;
     border-width: 3.5px;
-    color: #2075d1;
+    color: var(--accent);
+}
+
+article {
+    max-width: 60ch;
+}
+
+article h1, article h2, article h3 {
+    margin-bottom: 0.5rem;
+}
+
+article p {
+    margin-bottom: 1rem;
 }
