@@ -1,12 +1,18 @@
 <script lang="ts">
-	import type { PageServerData } from './$types';
+	import type { PageData } from '../[[slug]]/$houdini'
 
-    export let data: PageServerData
+	export let data: PageData
+
+	$: ({ Article } = data)
 </script>
 
-<article>
-    <h1>{data.article.title}</h1>
-    {@html data.article.content}
-</article>
-
-<a href={`/article/${data.article.slug}/edit`}>Edit</a>
+{#if $Article.fetching}
+	<p>Loading...</p>
+{:else}
+	<h1>{$Article.data.articleBySlug.title}</h1>
+	{#if $Article.data.articleBySlug.updatedAt}
+		<em>Last updated: {$Article.data.articleBySlug.updatedAt}</em>
+		<br>
+	{/if}
+	<p>{$Article.data.articleBySlug.content}</p>
+{/if}

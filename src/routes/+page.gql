@@ -1,0 +1,9 @@
+query Articles($input: GetArticlesRequestInput!) {
+  articles(input: $input) {
+    id
+    createdAt
+    title
+    content
+    slug
+  }
+}

@@ -3,7 +3,7 @@
 </script>
 
 <header>
-    <h2><a href="/">WomensWiki</a></h2>
+    <h2 id="page-title"><a href="/">WomensWiki</a></h2>
 </header>
 <main>
     <slot/>
@@ -12,8 +12,14 @@
 <style>
     header {
         padding: 1rem 2rem;
-        background: #eee;
+        border-bottom: 2px solid var(--color-primary);
     }
+
+    #page-title a {
+        font-weight: bold;
+        border-bottom: none;
+    }
+    
     main {
         padding: 2rem;
     }

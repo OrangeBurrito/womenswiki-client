@@ -1,0 +1,68 @@
+type ArticleResponse {
+  content: String!
+  createdAt: DateTime!
+  id: UUID!
+  slug: String!
+  title: String!
+  updatedAt: DateTime
+}
+
+input ArticleResponseSortInput {
+  content: SortEnumType
+  createdAt: SortEnumType
+  id: SortEnumType
+  slug: SortEnumType
+  title: SortEnumType
+  updatedAt: SortEnumType
+}
+
+input CreateArticleCommandInput {
+  author: String!
+  content: String!
+  title: String!
+}
+
+type CreateArticleResponse {
+  content: String!
+  createdAt: DateTime!
+  id: UUID!
+  title: String!
+}
+
+"""The `DateTime` scalar represents an ISO-8601 compliant date time type."""
+scalar DateTime
+
+input GetArticleByIdRequestInput {
+  id: UUID!
+}
+
+input GetArticlesRequestInput {
+  descending: Boolean! = false
+  limit: Int! = 10
+  offset: Int! = 0
+}
+
+type Mutation {
+  createArticle(input: CreateArticleCommandInput!): CreateArticleResponse!
+  updateArticle(input: UpdateArticleCommandInput!): ArticleResponse!
+}
+
+type Query {
+  articleById(input: GetArticleByIdRequestInput!): ArticleResponse!
+  articleBySlug(slug: String!): ArticleResponse!
+  articles(input: GetArticlesRequestInput!, order: [ArticleResponseSortInput!]): [ArticleResponse!]!
+}
+
+enum SortEnumType {
+  ASC
+  DESC
+}
+
+scalar UUID
+
+input UpdateArticleCommandInput {
+  articleId: UUID!
+  author: String!
+  content: String!
+  summary: String
+}
