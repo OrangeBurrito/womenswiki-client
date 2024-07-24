@@ -9,16 +9,23 @@
     })
 </script>
 
-<h2>Articles</h2>
+<h1 id="page-title">WomensWiki</h1>
 
 {#if articles}
+<h2>Latest Articles</h2>
 <ul>
     {#each articles as article}
     <li>
-        <a href="/article/{article.slug}" data-id={article.id}>{article.title}</a>
+        <a href="/article/{article.slug}">{article.title}</a>
     </li>
     {/each}
 </ul>
 {/if}
 
 <a href="/article/create">Create An Article</a>
+
+<style>
+    .page-title {
+        color: var(--color-primary);
+    }
+</style>

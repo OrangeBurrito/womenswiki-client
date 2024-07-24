@@ -12,21 +12,21 @@ export const actions = {
     update: async ({request}) => {
         const data = await request.formData()
 
-        const res = await fetch(`http://localhost:5161/article/update`, {
-            method: 'PATCH',
-            body: data
-        })
+        // const res = await fetch(`http://localhost:5161/article/update`, {
+        //     method: 'PATCH',
+        //     body: data
+        // })
 
-        const json = await res.json()
-        throw redirect(303, `/article/${json.slug}`)
+        // const json = await res.json()
+        // throw redirect(303, `/article/${json.slug}`)
     },
     delete: async ({request}) => {
         const data = await request.formData()
 
-        await fetch(`http://localhost:5161/article/delete/${data.get("id")}`, {
-            method: 'DELETE',
-        })
+        // await fetch(`http://localhost:5161/article/delete/${data.get("id")}`, {
+        //     method: 'DELETE',
+        // })
 
-        throw redirect(303, `/`)
+        // throw redirect(303, `/`)
     }
 } satisfies Actions

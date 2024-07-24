@@ -4,7 +4,7 @@
 }
 
 :root {
-    --accent: #8a4ec5;
+    --color-primary: #8a4ec5;
 }
 
 body {
@@ -28,14 +28,14 @@ pre, code {
 
 a, a:visited {
     text-decoration: none;
-    border-bottom: 2.5px solid var(--accent);
+    border-bottom: 2.5px solid var(--color-primary);
     color: inherit;
 }
 
 a:hover {
     font-weight: 600;
     border-width: 3.5px;
-    color: var(--accent);
+    color: var(--color-primary);
 }
 
 article {
