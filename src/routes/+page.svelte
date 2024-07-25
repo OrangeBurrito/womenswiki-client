@@ -13,7 +13,7 @@
 	<ul>
 		{#each $Articles.data.articles as article}
 			<li>
-				<a href="/article/{article.slug}">{article.title}</a>
+				<a href="/wiki/{article.slug}">{article.title}</a>
 			</li>
 		{/each}
 	</ul>

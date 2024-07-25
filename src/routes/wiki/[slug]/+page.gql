@@ -1,4 +1,4 @@
-query Article($slug: String!) {
+query Article($slug: String!) @cache(policy: CacheOrNetwork) {
   articleBySlug(slug: $slug) {
     id
     createdAt
