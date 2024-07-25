@@ -7,6 +7,10 @@
     --color-primary: #8a4ec5;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: 'IBM Plex Sans', system-ui, sans-serif;
     line-height: 1.5;
@@ -46,6 +50,6 @@ article h1, article h2, article h3 {
     margin-bottom: 0.5rem;
 }
 
-article p {
+article p, article ul, article ol, article pre, article details {
     margin-bottom: 1rem;
 }

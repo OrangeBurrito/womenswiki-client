@@ -1,27 +1,50 @@
 <script lang="ts">
 	import type { PageData } from './$houdini'
-	import type {Plugin } from 'svelte-exmarkdown'
-	import Markdown from 'svelte-exmarkdown'
-	import { gfmPlugin } from 'svelte-exmarkdown/gfm'
-	import rehypeRaw from 'rehype-raw'
+	import { Carta, Markdown } from 'carta-md'
+	import type { Plugin, UnifiedTransformer} from 'carta-md'
+	import { anchor } from '@cartamd/plugin-anchor'
+	import remarkToc from 'remark-toc'
+	import remarkGfm from 'remark-gfm'
 
 	export let data: PageData
-	const plugins: Plugin[] = [gfmPlugin(), { rehypePlugin: [rehypeRaw] }]
 
 	$: ({ Article } = data)
+
+	const transformer: UnifiedTransformer<'sync'> = {
+		execution: 'sync',
+		type: 'remark',
+		transform: ({processor}) => {
+			processor
+				.use(remarkGfm)
+				.use(remarkToc)
+		}
+	}
+
+	const remark = (): Plugin => ({transformers: [transformer]})
+
+	const carta = new Carta({
+		extensions: [anchor(), remark()]
+	})
 </script>
 
 {#if $Article.fetching}
 	<p>Loading...</p>
 {:else}
 <article>
-	<h1>{$Article.data.articleBySlug.title}</h1>
+	<h1 class="article-title">{$Article.data.articleBySlug.title}</h1>
 	{#if $Article.data.articleBySlug.updatedAt}
-		<em>Last updated: {$Article.data.articleBySlug.updatedAt}</em>
-		<br>
+		<em class="last-updated">Last updated: {$Article.data.articleBySlug.updatedAt}</em>
 	{/if}
 	<div class="content">
-		<Markdown md={$Article.data.articleBySlug.content} {plugins} />
+		<Markdown {carta} value={$Article.data.articleBySlug.content} />
 	</div>
 </article>
 {/if}
+
+<style>
+	.last-updated {
+		display: block;
+		margin-top: -0.5rem;
+		margin-bottom: 1rem;
+	}
+</style>
