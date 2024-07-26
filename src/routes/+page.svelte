@@ -4,6 +4,8 @@
 	export let data: PageData
 
 	$: ({ Articles } = data)
+
+	
 </script>
 
 <h2>Latest Articles</h2>

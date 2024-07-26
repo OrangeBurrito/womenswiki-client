@@ -5,6 +5,7 @@
 	import { anchor } from '@cartamd/plugin-anchor'
 	import remarkToc from 'remark-toc'
 	import remarkGfm from 'remark-gfm'
+	import remarkBreaks from 'remark-breaks'
 
 	export let data: PageData
 
@@ -16,6 +17,7 @@
 		transform: ({processor}) => {
 			processor
 				.use(remarkGfm)
+				.use(remarkBreaks)
 				.use(remarkToc)
 		}
 	}

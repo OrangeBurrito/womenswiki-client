@@ -26,11 +26,17 @@ type CreateArticleResponse {
   content: String!
   createdAt: DateTime!
   id: UUID!
+  slug: String!
   title: String!
 }
 
 """The `DateTime` scalar represents an ISO-8601 compliant date time type."""
 scalar DateTime
+
+type Error {
+  code: String!
+  message: String
+}
 
 input GetArticleByIdRequestInput {
   id: UUID!
@@ -43,14 +49,28 @@ input GetArticlesRequestInput {
 }
 
 type Mutation {
-  createArticle(input: CreateArticleCommandInput!): CreateArticleResponse!
-  updateArticle(input: UpdateArticleCommandInput!): ArticleResponse!
+  createArticle(input: CreateArticleCommandInput!): ResultOfCreateArticleResponse!
+  updateArticle(input: UpdateArticleCommandInput!): ResultOfArticleResponse!
 }
 
 type Query {
-  articleById(input: GetArticleByIdRequestInput!): ArticleResponse!
+  articleById(input: GetArticleByIdRequestInput!): ResultOfArticleResponse!
   articleBySlug(slug: String!): ArticleResponse!
   articles(input: GetArticlesRequestInput!, order: [ArticleResponseSortInput!]): [ArticleResponse!]!
+}
+
+type ResultOfArticleResponse {
+  data: ArticleResponse
+  errors: [Error!]
+  isFailure: Boolean!
+  isSuccess: Boolean!
+}
+
+type ResultOfCreateArticleResponse {
+  data: CreateArticleResponse
+  errors: [Error!]
+  isFailure: Boolean!
+  isSuccess: Boolean!
 }
 
 enum SortEnumType {

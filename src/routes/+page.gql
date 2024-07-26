@@ -1,4 +1,4 @@
-query Articles($input: GetArticlesRequestInput!) @cache(policy: CacheOrNetwork) {
+query Articles($input: GetArticlesRequestInput!) @cache(policy: NetworkOnly) {
   articles(input: $input) {
     id
     createdAt

@@ -46,10 +46,16 @@ article {
     max-width: 60ch;
 }
 
-article h1, article h2, article h3 {
-    margin-bottom: 0.5rem;
+.markdown-body p, .markdown-body ul, .markdown-body ol, .markdown-body details {
+    margin-bottom: 1rem;
 }
 
-article p, article ul, article ol, article pre, article details {
-    margin-bottom: 1rem;
+.carta-theme__default .carta-input {
+    line-height: normal;
+    font-size: 13px !important;
+}
+
+.carta-editor {
+    height: 60vh;
+    overflow-y: scroll;
 }
