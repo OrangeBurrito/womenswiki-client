@@ -22,5 +22,3 @@ vite.config.ts.timestamp-*
 
 $houdini
 /.vscode
-
-schema.graphql
