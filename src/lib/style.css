@@ -59,3 +59,15 @@ article {
     height: 60vh;
     overflow-y: scroll;
 }
+
+#infobox {
+    position: absolute;
+    right: 0;
+    top: 0;
+    border-collapse: collapse;
+    background: #f8f9fa;
+}
+
+#infobox tr {
+    padding: 0.25rem 0.5rem;
+}

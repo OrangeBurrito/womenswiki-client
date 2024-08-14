@@ -2,15 +2,14 @@
 	import { beforeNavigate, goto } from '$app/navigation'
 	import { graphql } from "$houdini"
     import { Carta, MarkdownEditor } from 'carta-md'
-    import type { Plugin, UnifiedTransformer} from 'carta-md'
     import 'carta-md/default.css'
     import { anchor } from '@cartamd/plugin-anchor'
-	import remarkToc from 'remark-toc'
-	import remarkGfm from 'remark-gfm'
-    import remarkBreaks from 'remark-breaks'
+	import { remark } from '$lib/markdown/plugin'
+
+    const defaultContent = "{{ infobox \n| title = New Article \n| image = https://images.unsplash.com/photo-1722778610349-e3c02e277ec2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D \n| caption = a little caption \n| value one = some value \n| value two = [a link](https://orangeburrito.com) \n}}\n\nThe below header is required for the Table of Contents\n## Contents\n\n## First Header\nSome content\n\n## Second Header\nSome other content"
 
     beforeNavigate(({cancel}) => {
-        if (articleInput.content !== "Put content here\nThe below header is for the Table of Contents\n## Contents\n\n## First Header\nSome content\n\n## Second Header") {
+    if (articleInput.content !== defaultContent) {
             if (!confirm('You have unsaved changes. Are you sure you want to leave?')) {
                 cancel()
             }
@@ -34,26 +33,14 @@
     }
     `)
 
-    const transformer: UnifiedTransformer<'sync'> = {
-        execution: 'sync',
-		type: 'remark',
-		transform: ({processor}) => {
-            processor
-            .use(remarkGfm)
-            .use(remarkBreaks)
-            .use(remarkToc)
-		}
-	}
-	const remark = (): Plugin => ({transformers: [transformer]})
-    
 	const carta = new Carta({
         extensions: [anchor(), remark()]
-	})
+    })
 
     let articleInput = {
         author: "orangeburrito",
         title: "New Article",
-        content: "Put content here\nThe below header is for the Table of Contents\n## Contents\n\n## First Header\nSome content\n\n## Second Header"
+        content: defaultContent
     }
 
     let mutationResult
@@ -83,7 +70,7 @@
                 {/each}
             </div>
         {/if}
-        <MarkdownEditor {carta} mode="split" bind:value={articleInput.content} />
+        <MarkdownEditor {carta} mode="tabs" bind:value={articleInput.content} />
         <button on:click={createArticle}>Create Article</button>
 </div>
 
