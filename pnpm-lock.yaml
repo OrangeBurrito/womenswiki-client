@@ -13,6 +13,9 @@ devDependencies:
   '@cartamd/plugin-anchor':
     specifier: ^2.0.3
     version: 2.0.3(carta-md@4.4.2)(svelte@5.0.0-next.1)
+  '@microflash/rehype-figure':
+    specifier: ^2.1.0
+    version: 2.1.0
   '@sveltejs/adapter-auto':
     specifier: ^3.0.0
     version: 3.0.0(@sveltejs/kit@2.0.0)
@@ -44,17 +47,14 @@ devDependencies:
     specifier: ^1.2.50
     version: 1.2.50
   mdast-util-infobox:
-    specifier: ^1.0.3
-    version: 1.0.3
+    specifier: ^1.0.4
+    version: 1.0.4
   prettier:
     specifier: ^3.1.1
     version: 3.1.1
   prettier-plugin-svelte:
     specifier: ^3.1.2
     version: 3.1.2(prettier@3.1.1)(svelte@5.0.0-next.1)
-  rehype-stringify:
-    specifier: ^10.0.0
-    version: 10.0.0
   remark-breaks:
     specifier: ^4.0.0
     version: 4.0.0
@@ -62,8 +62,8 @@ devDependencies:
     specifier: ^4.0.0
     version: 4.0.0
   remark-infobox:
-    specifier: ^1.0.1
-    version: 1.0.1(micromark@4.0.0)(typescript@5.0.2)
+    specifier: ^1.0.3
+    version: 1.0.3(micromark@4.0.0)(typescript@5.0.2)
   remark-rehype:
     specifier: ^11.1.0
     version: 11.1.0
@@ -85,9 +85,6 @@ devDependencies:
   typescript-eslint:
     specifier: ^8.0.0-alpha.20
     version: 8.0.0-alpha.20(eslint@9.0.0)(typescript@5.0.2)
-  unified:
-    specifier: ^11.0.5
-    version: 11.0.5
   vite:
     specifier: ^5.0.3
     version: 5.0.3
@@ -801,6 +798,15 @@ packages:
     engines: {node: ^16.14 || >=18}
     dependencies:
       esm-env: 1.0.0
+    dev: true
+
+  /@microflash/rehype-figure@2.1.0:
+    resolution: {integrity: sha512-Ff1rrqjRYcmV9/7Qk8HM/mBpz9k5yzO8pgKfbI2hnN09sBQXoeOP4d9J419Mwk+LoMZlSfd4kgI92dFRtYBvUg==}
+    dependencies:
+      hast-util-whitespace: 3.0.0
+      hastscript: 9.0.0
+      unist-util-remove: 4.0.0
+      unist-util-visit: 5.0.0
     dev: true
 
   /@nodelib/fs.scandir@2.1.5:
@@ -2241,6 +2247,16 @@ packages:
       property-information: 6.5.0
       space-separated-tokens: 2.0.2
 
+  /hastscript@9.0.0:
+    resolution: {integrity: sha512-jzaLBGavEDKHrc5EfFImKN7nZKKBdSLIdGvCwDZ9TfzbF2ffXiov8CKE445L2Z1Ek2t/m4SKQ2j6Ipv7NyUolw==}
+    dependencies:
+      '@types/hast': 3.0.4
+      comma-separated-tokens: 2.0.3
+      hast-util-parse-selector: 4.0.0
+      property-information: 6.5.0
+      space-separated-tokens: 2.0.2
+    dev: true
+
   /houdini-svelte@1.2.50:
     resolution: {integrity: sha512-JIcHatC/3si+5KMBtv357VAUGtfZRuAeiF2rtt9hVsdmu6p7kOmvtiuUzXJGcODD0106lpeQwGjNXnvxOhSfTA==}
     dependencies:
@@ -2564,8 +2580,8 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /mdast-util-infobox@1.0.3:
-    resolution: {integrity: sha512-7FqzoQSRaAKQp3TKba/Mc6WfptedaDLJjmUPVKuQdlWurCzV/LcmztVYzDxlYwFPSkcvKwo0pdpszXzQdfuLbg==}
+  /mdast-util-infobox@1.0.4:
+    resolution: {integrity: sha512-KMYLaolkRHBgPrJjpr0yOkoeToVYhdG+KEBcSfvao10BWaQP1+kXD+NpWMUVCPlUxUJGfAveGkKX1vh6jlb02Q==}
     dependencies:
       unist-builder: 4.0.0
     dev: true
@@ -2726,8 +2742,8 @@ packages:
       micromark-util-combine-extensions: 2.0.0
       micromark-util-types: 2.0.0
 
-  /micromark-extension-infobox@1.0.2(micromark@4.0.0):
-    resolution: {integrity: sha512-i7DfVMd6RG/nrq3JmryIid4Tzqu11rvaD47BggcAuiUA633lgplFh0Xu9ugmubp3vMIejfbpGLghU5w1yJRZhw==}
+  /micromark-extension-infobox@1.0.4(micromark@4.0.0):
+    resolution: {integrity: sha512-F43AP4DO1xoBTTHZWaLnCZ9PxtGJaBpX6VZckp9CdfniReb+UZ5runWnNRXz7wBjOuPw2oOw8xX/kwuMtjdE2A==}
     peerDependencies:
       micromark: ^4.0.0
     dependencies:
@@ -3229,13 +3245,13 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /remark-infobox@1.0.1(micromark@4.0.0)(typescript@5.0.2):
-    resolution: {integrity: sha512-SypBQOblxh3lrmQjzWP4hCOEWoWfeGi7HcMQtHLCcYxgk3pqxlDpQTfYDRPoVOXoIW8mvULbguZCnNKF9BeA7A==}
+  /remark-infobox@1.0.3(micromark@4.0.0)(typescript@5.0.2):
+    resolution: {integrity: sha512-P7yCB6pwtjLQ3DxfCrjJWx/C7u+KXedvinU8kpFf0T3bJoAb92N7yYR0eBWELGPZtzH5E4kUw7pu+PzBP8cz7w==}
     peerDependencies:
       typescript: ^5.0.0
     dependencies:
-      mdast-util-infobox: 1.0.3
-      micromark-extension-infobox: 1.0.2(micromark@4.0.0)
+      mdast-util-infobox: 1.0.4
+      micromark-extension-infobox: 1.0.4(micromark@4.0.0)
       typescript: 5.0.2
     transitivePeerDependencies:
       - micromark
@@ -3729,6 +3745,14 @@ packages:
     resolution: {integrity: sha512-fucsC7HjXvkB5R3kTCO7kUjRdrS0BJt3M/FPxmHMBOm8JQi2BsHAHFsy27E0EolP8rp0NzXsJ+jNPyDWvOJZPA==}
     dependencies:
       '@types/unist': 3.0.2
+
+  /unist-util-remove@4.0.0:
+    resolution: {integrity: sha512-b4gokeGId57UVRX/eVKej5gXqGlc9+trkORhFJpu9raqZkZhU0zm8Doi05+HaiBsMEIJowL+2WtQ5ItjsngPXg==}
+    dependencies:
+      '@types/unist': 3.0.2
+      unist-util-is: 6.0.0
+      unist-util-visit-parents: 6.0.1
+    dev: true
 
   /unist-util-stringify-position@4.0.0:
     resolution: {integrity: sha512-0ASV06AAoKCDkS2+xw5RXJywruurpbC4JZSm7nr7MOt1ojAzvyyaO+UxZf18j8FCF6kmzCZKcAgN/yu2gm2XgQ==}

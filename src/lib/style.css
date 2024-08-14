@@ -46,10 +46,6 @@ article {
     max-width: 60ch;
 }
 
-.markdown-body p, .markdown-body ul, .markdown-body ol, .markdown-body details {
-    margin-bottom: 1rem;
-}
-
 .carta-theme__default .carta-input {
     line-height: normal;
     font-size: 13px !important;
@@ -61,13 +57,28 @@ article {
 }
 
 #infobox {
-    position: absolute;
-    right: 0;
-    top: 0;
+    float: right;
     border-collapse: collapse;
     background: #f8f9fa;
 }
 
 #infobox tr {
     padding: 0.25rem 0.5rem;
+}
+
+#infobox img {
+    display: block;
+    margin: 1rem;
+}
+
+.markdown-body p, .markdown-body ul, .markdown-body ol, .markdown-body details {
+    margin-bottom: 1rem;
+}
+
+.markdown-body figure {
+    float: right;
+}
+
+.markdown-body figure img {
+    max-width: 200px;
 }

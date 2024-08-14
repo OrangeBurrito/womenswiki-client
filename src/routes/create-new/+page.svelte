@@ -2,11 +2,11 @@
 	import { beforeNavigate, goto } from '$app/navigation'
 	import { graphql } from "$houdini"
     import { Carta, MarkdownEditor } from 'carta-md'
-    import 'carta-md/default.css'
     import { anchor } from '@cartamd/plugin-anchor'
-	import { remark } from '$lib/markdown/plugin'
+	import { rehype, remark } from '$lib/markdown/plugin'
+    import 'carta-md/default.css'
 
-    const defaultContent = "{{ infobox \n| title = New Article \n| image = https://images.unsplash.com/photo-1722778610349-e3c02e277ec2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D \n| caption = a little caption \n| value one = some value \n| value two = [a link](https://orangeburrito.com) \n}}\n\nThe below header is required for the Table of Contents\n## Contents\n\n## First Header\nSome content\n\n## Second Header\nSome other content"
+    const defaultContent = "{{ infobox \n| title = New Article \n| image = https://images.unsplash.com/photo-1722778610349-e3c02e277ec2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D \n| caption = a little caption \n| value one = some value \n| value two = [a link](https://orangeburrito.com) \n}}\n\nThe below header is required for the Table of Contents\n## Contents\n\n## First Header\nSome content\n\n## Second Header\nSome other content\n\n![Alt Text](https://upload.wikimedia.org/wikipedia/commons/a/a7/Caspar_David_Friedrich%27s_Chalk_Cliffs_on_R%C3%BCgen.jpg)\n\nan image that is very well known of course, hmmm"
 
     beforeNavigate(({cancel}) => {
     if (articleInput.content !== defaultContent) {
@@ -34,7 +34,7 @@
     `)
 
 	const carta = new Carta({
-        extensions: [anchor(), remark()]
+        extensions: [anchor(), remark(), rehype()]
     })
 
     let articleInput = {
