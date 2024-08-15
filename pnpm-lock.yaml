@@ -10,6 +10,9 @@ dependencies:
     version: 4.4.2(svelte@5.0.0-next.1)
 
 devDependencies:
+  '@benrbray/remark-cite':
+    specifier: 2.0.1-alpha.4
+    version: 2.0.1-alpha.4(micromark@4.0.0)
   '@cartamd/plugin-anchor':
     specifier: ^2.0.3
     version: 2.0.3(carta-md@4.4.2)(svelte@5.0.0-next.1)
@@ -47,8 +50,8 @@ devDependencies:
     specifier: ^1.2.50
     version: 1.2.50
   mdast-util-infobox:
-    specifier: ^1.0.4
-    version: 1.0.4
+    specifier: ^1.0.5
+    version: 1.0.5
   prettier:
     specifier: ^3.1.1
     version: 3.1.1
@@ -128,6 +131,31 @@ packages:
       '@babel/helper-string-parser': 7.24.8
       '@babel/helper-validator-identifier': 7.24.7
       to-fast-properties: 2.0.0
+    dev: true
+
+  /@benrbray/mdast-util-cite@2.0.1-alpha.4(micromark@4.0.0):
+    resolution: {integrity: sha512-rfdFhiTJWiRoknUAxbjuWln5li3UXv/VmuZLguW+PyZsJP/skcFQ505oxch3FiMHrReRenkEQXD+NxykNWchoQ==}
+    dependencies:
+      '@benrbray/micromark-extension-cite': 2.0.1-alpha.1(micromark@4.0.0)
+    transitivePeerDependencies:
+      - micromark
+    dev: true
+
+  /@benrbray/micromark-extension-cite@2.0.1-alpha.1(micromark@4.0.0):
+    resolution: {integrity: sha512-5/YdMl1lg28nSmMhUdCJm3C8SdElWymsEwPqA66NFlj0VNv23nAUL8Rgm92Gp0SLudKFbQmm+v041FgubG9Pug==}
+    peerDependencies:
+      micromark: ^4.0.0
+    dependencies:
+      micromark: 4.0.0
+    dev: true
+
+  /@benrbray/remark-cite@2.0.1-alpha.4(micromark@4.0.0):
+    resolution: {integrity: sha512-2rtDjtvIYn88MF5jJ8Qyv0NHxbTac19c+lRKIsHRqnWQcuBehYKmJSt4NWC9TSYd5S8TmgGFYz6md4r4vEJuFw==}
+    dependencies:
+      '@benrbray/mdast-util-cite': 2.0.1-alpha.4(micromark@4.0.0)
+      '@benrbray/micromark-extension-cite': 2.0.1-alpha.1(micromark@4.0.0)
+    transitivePeerDependencies:
+      - micromark
     dev: true
 
   /@cartamd/plugin-anchor@2.0.3(carta-md@4.4.2)(svelte@5.0.0-next.1):
@@ -2580,8 +2608,8 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /mdast-util-infobox@1.0.4:
-    resolution: {integrity: sha512-KMYLaolkRHBgPrJjpr0yOkoeToVYhdG+KEBcSfvao10BWaQP1+kXD+NpWMUVCPlUxUJGfAveGkKX1vh6jlb02Q==}
+  /mdast-util-infobox@1.0.5:
+    resolution: {integrity: sha512-A7RSA31yas7huFzEEn0jbAcZfWBSfj72Cg40go5DV/e77VoslLjihDaY9E9EtXSRiXvrevd6V2yd9qtTmNSkJA==}
     dependencies:
       unist-builder: 4.0.0
     dev: true
@@ -3250,7 +3278,7 @@ packages:
     peerDependencies:
       typescript: ^5.0.0
     dependencies:
-      mdast-util-infobox: 1.0.4
+      mdast-util-infobox: 1.0.5
       micromark-extension-infobox: 1.0.4(micromark@4.0.0)
       typescript: 5.0.2
     transitivePeerDependencies:

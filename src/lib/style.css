@@ -42,10 +42,6 @@ a:hover {
     color: var(--color-primary);
 }
 
-article {
-    max-width: 60ch;
-}
-
 .carta-theme__default .carta-input {
     line-height: normal;
     font-size: 13px !important;
@@ -60,25 +56,49 @@ article {
     float: right;
     border-collapse: collapse;
     background: #f8f9fa;
+    margin: 0 1rem;
 }
 
-#infobox tr {
-    padding: 0.25rem 0.5rem;
+#infobox th:not(#image) {
+    padding: 0.25rem;
+}
+
+#infobox th#caption {
+    font-weight: normal;
 }
 
 #infobox img {
     display: block;
-    margin: 1rem;
+    margin: 0 1rem;
 }
 
 .markdown-body p, .markdown-body ul, .markdown-body ol, .markdown-body details {
     margin-bottom: 1rem;
 }
 
+.markdown-body a {
+    border-bottom: none;
+    color: var(--color-primary);
+}
+
+.markdown-body a:hover {
+    font-weight: normal;
+    border-bottom: var(--color-primary) 2px solid;
+}
+
+.markdown-body li p {
+    margin: auto;
+}
+
 .markdown-body figure {
     float: right;
+    margin-right: 1rem;
 }
 
 .markdown-body figure img {
     max-width: 200px;
+}
+
+.markdown-body figcaption {
+    font-size: 0.85rem;
 }

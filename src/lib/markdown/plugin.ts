@@ -1,7 +1,7 @@
 import type { UnifiedTransformer, Plugin } from "carta-md"
 import remarkRehype from 'remark-rehype'
 import remarkToc from 'remark-toc'
-import remarkGfm from 'remark-gfm'
+import remarkCite from '@benrbray/remark-cite'
 import remarkInfobox from 'remark-infobox'
 import { infoboxHastHandlers } from 'mdast-util-infobox';
 import rehypeFigure from "@microflash/rehype-figure";
@@ -12,6 +12,7 @@ const remarkTransformer: UnifiedTransformer<'sync'> = {
     transform: ({processor}) => {
         processor
         .use(remarkToc)
+        .use(remarkCite)
         .use(remarkInfobox)
         .use(remarkRehype, {
             handlers: { ...infoboxHastHandlers }
