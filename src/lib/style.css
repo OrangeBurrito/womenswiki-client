@@ -122,5 +122,6 @@ ul, ol {
 }
 
 .markdown-body figcaption {
+    max-width: 200px;
     font-size: 0.85rem;
 }

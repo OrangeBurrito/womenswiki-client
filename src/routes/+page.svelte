@@ -29,20 +29,20 @@
 </section>
 <div class="content">
 	<section>
-		<h2>Self-Made Categories</h2>
+		<h2>Predefined Categories</h2>
 		<ul>
-			<li>Category1</li>
-			<li>Category2</li>
-			<li>Category3</li>
-			<li>Category4</li>
-			<li>Category5</li>
+			<li>Radical Feminism & TERFery</li>
+			<li>Notable Women</li>
+			<li>Women in History</li>
+			<li>Literature</li>
+			<li>Media</li>
 		</ul>
 		<h2>Common Tags</h2>
 		{#if $tags.fetching}
 			<p>Loading...</p>
 		{:else}
 		<ul>
-			{#each $tags.data.tags as tag}
+			{#each $tags.data.tags.data as tag}
 			<a href="/tags/{tag.name}">{tag.name}</a>
 			{/each}
 		</ul>
