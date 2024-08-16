@@ -16,6 +16,10 @@ body {
     line-height: 1.5;
 }
 
+body.modal-open {
+    overflow: hidden;
+}
+
 p {
     line-height: 1.6;
 }

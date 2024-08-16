@@ -33,6 +33,10 @@
 		justify-content: center;
 	}
 
+	.article-title {
+		margin-bottom: 0.5rem;
+	}
+
 	article .content {
     	max-width: 80ch;
 	}

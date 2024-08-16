@@ -4,8 +4,6 @@
 	export let data: PageData
 
 	$: ({ Articles } = data)
-
-	
 </script>
 
 <section class="center">
@@ -49,12 +47,11 @@
 <style>
 	.center {
 		text-align: center;
-		padding: 2rem 0;
+		margin-bottom: 2rem;
 	}
 
 	.content {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-		/* grid-template-columns: 1fr 1fr; */
 	}
 </style>

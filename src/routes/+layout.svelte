@@ -34,6 +34,7 @@
     
     main {
         max-width: 900px;
+        padding: 2rem 0;
         margin: 0 auto;
     }
 </style>
