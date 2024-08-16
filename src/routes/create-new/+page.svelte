@@ -48,10 +48,16 @@
     let errors = $state([])
 
     const createArticle = async () => {
-        console.log(articleInput.content.match(/\|\s*title\s*=\s*(.*)/gm))
+        if (/\|\s*title\s*=\s*(.*)/gm.exec(articleInput.content)[1].trim() != articleInput.title) {
+            errors = [{code: "Title", message: "Infobox title must match the article title"}]
+            return
+        }
+
         let result = await createArticleMutation.mutate({input: articleInput})
         mutationResult = await result.data?.createArticle
+
         errors = mutationResult.errors
+
         if (mutationResult.errors == null) {
             goto(`/wiki/${mutationResult.data.slug}`)
         }
