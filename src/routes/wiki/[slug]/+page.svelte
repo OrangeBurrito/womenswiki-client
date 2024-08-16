@@ -24,21 +24,24 @@
 
 {#if $article.fetching}
 	<p>Loading...</p>
+{:else if $article.data.articleBySlug.errors}
+	<h2>{$article.data.articleBySlug.errors[0].message}</h2>
+	<a href="/">Go Back</a>
 {:else}
 <article>
 	<div class="wrap">
 		<div class="heading">
-			<h1 class="article-title">{$article.data.articleBySlug.title}</h1>
-			{#if $article.data.articleBySlug.updatedAt}
-				<em class="last-updated">Last updated: {$article.data.articleBySlug.updatedAt}</em>
+			<h1 class="article-title">{$article.data.articleBySlug.data.title}</h1>
+			{#if $article.data.articleBySlug.data.updatedAt}
+				<em class="last-updated">Last updated: {$article.data.articleBySlug.data.updatedAt}</em>
 			{/if}
 			<div class="tags">
-				{#each $article.data.articleBySlug.tags as tag}
+				{#each $article.data.articleBySlug.data.tags as tag}
 					<Tag name={tag.name} />
 				{/each}
 			</div>
 		</div>
-			<Markdown {carta} value={$article.data.articleBySlug.content} />
+			<Markdown {carta} value={$article.data.articleBySlug.data.content} />
 	</div>
 </article>
 {/if}

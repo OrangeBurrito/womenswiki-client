@@ -17,13 +17,19 @@ query articles($input: GetArticlesRequestInput!) {
 export const ARTICLE_BY_SLUG = gql`
 query article($slug: String!) {
   articleBySlug(slug: $slug) {
-    id
-    createdAt
-    updatedAt
-    title
-    content
-    tags {
-      name
+    data {
+      id
+      createdAt
+      updatedAt
+      title
+      content
+      tags {
+        name
+      }
+    }
+    errors {
+      code
+      message
     }
   }
 }
