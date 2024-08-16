@@ -114,6 +114,13 @@
 		gap: 2rem;
 	}
 
+	.common-tags, .tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		list-style: none;
+	}
+
 	.common-tags li {
 		margin-bottom: 0.5rem;
 	}
@@ -121,5 +128,16 @@
 	.latest-articles {
 		max-width: 70%;
 		overflow-y: auto;
+	}
+
+	@media (max-width: 450px) {
+		.center {
+			flex-direction: column;
+		}
+	}
+	@media (max-width: 700px) {
+		.content {
+			grid-template-columns: 1fr;
+		}
 	}
 </style>
