@@ -23,11 +23,11 @@
     }
     
     header .inner {
-        max-width: 900px;
+        max-width: 85ch;
         display: flex;
         align-items: center;
         gap: 1rem;
-        padding: 0.5rem 0;
+        padding: 0.5rem 1rem;
         margin: 0 auto;
     }
 
@@ -38,7 +38,7 @@
     
     main {
         max-width: 900px;
-        padding: 2rem 0;
+        padding: 2rem 1rem;
         margin: 0 auto;
     }
 </style>

@@ -7,6 +7,9 @@
     --color-primary-light: rgb(236, 232, 241);
     --color-primary: #8a4ec5;
     --color-primary-dark: #391867;
+
+    --text-s: 0.85rem;
+    --text-m: 1rem;
 }
 
 html {
@@ -71,7 +74,7 @@ ul, ol {
     float: right;
     border-collapse: collapse;
     background: #f8f9fa;
-    margin: 0 1rem;
+    margin: 1rem;
 }
 
 #infobox th:not(#image) {
@@ -79,6 +82,7 @@ ul, ol {
 }
 
 #infobox th#caption {
+    font-size: var(--text-s);
     font-weight: normal;
 }
 
@@ -115,13 +119,44 @@ ul, ol {
 .markdown-body figure {
     float: right;
     margin-right: 1rem;
+    padding-left: 1rem;
 }
 
 .markdown-body figure img {
     max-width: 200px;
+    margin-bottom: 0.5rem;
 }
 
 .markdown-body figcaption {
     max-width: 200px;
-    font-size: 0.85rem;
+    font-size: var(--text-s);
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 550px) {
+    #infobox {
+        float: none;
+        width: calc(100% - 2rem);
+    }
+
+    #infobox th img {
+        margin: 0 auto;
+    }
+    .markdown-body figure {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        float: none;
+        margin-right: 0;
+        padding-left: 0;
+    }
+
+    .markdown-body figure img {
+        max-width: 100%;
+        max-height: 300px;
+    }
+
+    .markdown-body figcaption {
+        max-width: 100%;
+    }
 }

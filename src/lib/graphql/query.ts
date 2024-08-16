@@ -8,6 +8,9 @@ query articles($input: GetArticlesRequestInput!) {
     title
     content
     slug
+    tags {
+      name
+    }
   }
 }`
 

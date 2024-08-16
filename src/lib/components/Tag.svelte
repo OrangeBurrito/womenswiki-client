@@ -7,11 +7,17 @@
 <style>
     .tag {
         display: inline-block;
-        font-size: 0.75rem;
+        font-size: var(--text-s);
+        font-weight: 500;
         background: var(--color-primary-light);
         color: var(--color-primary-dark);
-        padding: 0.25rem 0.5rem;
+        padding: 2px 0.5rem;
         border-radius: 8px;
         border: 1.5px solid var(--color-primary);
+    }
+
+    .tag:hover {
+        font-weight: 700;
+        box-shadow: inset 0px 0px 0px 0.5px var(--color-primary-dark);
     }
 </style>
