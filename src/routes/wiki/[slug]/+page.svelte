@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { PageServerData } from './$types'
+	import Tag from '$lib/components/Tag.svelte'
 	import { remark, rehype } from '$lib/markdown/plugin'
 	import { getContextClient, queryStore } from '@urql/svelte'
 	import { ARTICLE_BY_SLUG } from '$lib/graphql/query'
@@ -25,12 +26,19 @@
 	<p>Loading...</p>
 {:else}
 <article>
-	<div class="content">
-	<h1 class="article-title">{$article.data.articleBySlug.title}</h1>
-	{#if $article.data.articleBySlug.updatedAt}
-		<em class="last-updated">Last updated: {$article.data.articleBySlug.updatedAt}</em>
-	{/if}
-		<Markdown {carta} value={$article.data.articleBySlug.content} />
+	<div class="wrap">
+		<div class="heading">
+			<h1 class="article-title">{$article.data.articleBySlug.title}</h1>
+			{#if $article.data.articleBySlug.updatedAt}
+				<em class="last-updated">Last updated: {$article.data.articleBySlug.updatedAt}</em>
+			{/if}
+			<div class="tags">
+				{#each $article.data.articleBySlug.tags as tag}
+					<Tag name={tag.name} />
+				{/each}
+			</div>
+		</div>
+			<Markdown {carta} value={$article.data.articleBySlug.content} />
 	</div>
 </article>
 {/if}
@@ -45,13 +53,19 @@
 		margin-bottom: 0.5rem;
 	}
 
-	article .content {
+	article .wrap {
     	max-width: 80ch;
 	}
 
 	.last-updated {
 		display: block;
 		margin-top: -0.5rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.tags {
+		display: flex;
+		gap: 0.5rem;
 		margin-bottom: 1rem;
 	}
 </style>

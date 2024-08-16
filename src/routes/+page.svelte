@@ -1,10 +1,20 @@
 <script lang="ts">
-	import { ARTICLES } from "$lib/graphql/query"
+	import { ARTICLES, TAGS } from "$lib/graphql/query"
 	import { getContextClient, queryStore } from "@urql/svelte"
 
 	const articles = queryStore({
 		client: getContextClient(),
 		query: ARTICLES,
+		variables: {
+			input: {
+				'limit': 10,
+			}
+		}
+	})
+
+	const tags = queryStore({
+		client: getContextClient(),
+		query: TAGS,
 		variables: {
 			input: {
 				'limit': 10,
@@ -28,12 +38,15 @@
 			<li>Category5</li>
 		</ul>
 		<h2>Common Tags</h2>
+		{#if $tags.fetching}
+			<p>Loading...</p>
+		{:else}
 		<ul>
-			<li>Tag1</li>
-			<li>Tag2</li>
-			<li>Tag3</li>
-			<li>Tag4</li>
+			{#each $tags.data.tags as tag}
+			<a href="/tags/{tag.name}">{tag.name}</a>
+			{/each}
 		</ul>
+		{/if}
 	</section>
 	<section>
 		<h2>Latest Articles</h2>

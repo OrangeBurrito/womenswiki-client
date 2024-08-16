@@ -4,7 +4,9 @@
 }
 
 :root {
+    --color-primary-light: rgb(236, 232, 241);
     --color-primary: #8a4ec5;
+    --color-primary-dark: #391867;
 }
 
 html {
@@ -78,6 +80,13 @@ ul, ol {
 
 #infobox th#caption {
     font-weight: normal;
+}
+
+#infobox a {
+    max-width: 15ch;
+    display: inline-block;
+    word-wrap: anywhere;
+    word-break: break-all;
 }
 
 #infobox img {

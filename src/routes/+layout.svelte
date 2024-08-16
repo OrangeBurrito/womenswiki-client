@@ -19,7 +19,7 @@
 
 <style>
     header {
-        background: rgb(236, 232, 241);
+        background: var(--color-primary-light);
     }
     
     header .inner {
