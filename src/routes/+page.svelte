@@ -1,14 +1,21 @@
 <script lang="ts">
-	import type { PageData } from './$houdini'
+	import { ARTICLES } from "$lib/graphql/query"
+	import { getContextClient, queryStore } from "@urql/svelte"
 
-	export let data: PageData
-
-	$: ({ Articles } = data)
+	const articles = queryStore({
+		client: getContextClient(),
+		query: ARTICLES,
+		variables: {
+			input: {
+				'limit': 10,
+			}
+		}
+	})
 </script>
 
 <section class="center">
 	<p><strong>WomensWiki</strong>, the free and open Radical Feminist Wiki for all women</p>
-	<p>{$Articles.data?.articles.length} articles and counting</p>
+	<p>{$articles.data?.articles.length} articles and counting</p>
 </section>
 <div class="content">
 	<section>
@@ -30,11 +37,11 @@
 	</section>
 	<section>
 		<h2>Latest Articles</h2>
-		{#if $Articles.fetching}
-			<p>Loading...</p>
+		{#if $articles.fetching}
+		<p>Loading...</p>
 		{:else}
 			<ul>
-				{#each $Articles.data.articles as article}
+				{#each $articles.data.articles as article}
 					<li>
 						<a href="/wiki/{article.slug}">{article.title}</a>
 					</li>

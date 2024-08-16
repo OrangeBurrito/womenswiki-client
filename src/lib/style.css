@@ -46,14 +46,23 @@ a:hover {
     color: var(--color-primary);
 }
 
+main h1, main h2 {
+    margin-bottom: 0.5rem;
+}
+
+ul, ol {
+    margin-bottom: 1rem;
+}
+
 .carta-theme__default .carta-input {
     line-height: normal;
     font-size: 13px !important;
 }
 
 .carta-editor {
-    height: 60vh;
     overflow-y: scroll;
+    max-height: 61vh;
+    margin-bottom: 1rem;
 }
 
 #infobox {
@@ -76,7 +85,7 @@ a:hover {
     margin: 0 1rem;
 }
 
-.markdown-body p, .markdown-body ul, .markdown-body ol, .markdown-body details {
+.markdown-body p {
     margin-bottom: 1rem;
 }
 

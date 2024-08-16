@@ -1,9 +1,0 @@
-query Articles($input: GetArticlesRequestInput!) @cache(policy: CacheOrNetwork) {
-  articles(input: $input) {
-    id
-    createdAt
-    title
-    content
-    slug
-  }
-}
