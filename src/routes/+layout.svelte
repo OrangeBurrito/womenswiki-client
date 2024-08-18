@@ -3,21 +3,23 @@
     import { client } from '$lib/graphql/client'
     import SearchBar from '$lib/components/SearchBar.svelte'
     import '$lib/style.css'
+	import type { LayoutServerData } from './$types'
+
+    export let data: LayoutServerData
 
     setContextClient(client)
 </script>
 
 <svelte:head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id={import.meta.env.VITE_GOOGLE_ANALYTICS_ID}"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id={data?.google_analytics}"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-    
-      gtag('config', import.meta.env.VITE_GOOGLE_ANALYTICS_ID);
-    </script>
+      
+      gtag('config', data?.google_analytics);
+      </script>
 </svelte:head>
-
 <header>
     <div class="inner">
         <h3 id="page-title"><a href="/">WomensWiki</a></h3>
