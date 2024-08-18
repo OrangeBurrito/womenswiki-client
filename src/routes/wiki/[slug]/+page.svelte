@@ -6,6 +6,7 @@
 	import { ARTICLE_BY_SLUG } from '$lib/graphql/query'
 	import { Carta, Markdown } from 'carta-md'
 	import { anchor } from '@cartamd/plugin-anchor'
+	import Loading from '$lib/components/Loading.svelte'
 
 	export let data: PageServerData
 
@@ -23,7 +24,7 @@
 </script>
 
 {#if $article.fetching}
-	<p>Loading...</p>
+	<Loading/>
 {:else if $article.data.articleBySlug.errors}
 	<h2>{$article.data.articleBySlug.errors[0].message}</h2>
 	<a href="/">Go Back</a>

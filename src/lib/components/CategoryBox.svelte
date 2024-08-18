@@ -1,8 +1,9 @@
 <script lang="ts">
     export let href = '';
+    export let disabled = false
 </script>
 
-<a {href}>
+<a {href} class:disabled >
     <div class="category-box">
         <slot/>
     </div>
@@ -25,6 +26,11 @@
     a {
         display: block;
         border-bottom: none;
+    }
+
+    a.disabled {
+        pointer-events: none;
+        opacity: 0.5;
     }
 
     .category-box :global(h3) {

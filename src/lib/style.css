@@ -17,6 +17,9 @@ html {
 }
 
 body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     font-family: 'IBM Plex Sans', system-ui, sans-serif;
     line-height: 1.5;
 }

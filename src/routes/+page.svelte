@@ -4,6 +4,7 @@
 	import CategoryBox from '$lib/components/CategoryBox.svelte'
 	import { ARTICLES, TAGS } from "$lib/graphql/query"
 	import { getContextClient, queryStore } from "@urql/svelte"
+	import Loading from '$lib/components/Loading.svelte'
 
 	const articles = queryStore({
 		client: getContextClient(),
@@ -42,36 +43,34 @@
 			<CategoryBox href="/wiki/about_womenswiki">
 				<h3>About WomensWiki</h3>
 			</CategoryBox>
-			<CategoryBox href="/wiki/radical_feminism">
+			<CategoryBox href="/wiki/radical_feminism" disabled>
 				<h3>Radical Feminism</h3>
 			</CategoryBox>
-			<CategoryBox href="/wiki/history">
+			<CategoryBox href="/wiki/history" disabled>
 				<h3>Women in History</h3>
 			</CategoryBox>
-			<CategoryBox href="/wiki/media_literature">
+			<CategoryBox href="/wiki/media_literature" disabled>
 				<h3>Feminist Media & Literature</h3>
 			</CategoryBox>
-			<CategoryBox href="/other_resources">
+			<CategoryBox href="/other_resources" disabled>
 				<h3>Other Websites & Resources</h3>
 			</CategoryBox>
 		</List>
 		<h2>Common Tags</h2>
 		{#if $tags.fetching}
-			<p>Loading...</p>
+			<Loading inline />
 		{:else}
-		<ul class="common-tags">
+		<div class="common-tags">
 			{#each $tags.data.tags.data as tag}
-			<li>
 				<Tag name={tag.name}/>
-			</li>
 			{/each}
-		</ul>
+		</div>
 		{/if}
 	</section>
 	<section class="latest-articles">
 		<h2>Latest Articles</h2>
 		{#if $articles.fetching}
-		<p>Loading...</p>
+			<Loading/>
 		{:else}
 			<List>
 				{#each $articles.data.articles as article}
@@ -117,11 +116,6 @@
 		display: flex;
 		flex-wrap: wrap;
 		gap: 6px;
-		list-style: none;
-	}
-
-	.common-tags li {
-		margin-bottom: 0.5rem;
 	}
 
 	.latest-articles {

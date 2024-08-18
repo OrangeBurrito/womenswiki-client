@@ -10,25 +10,33 @@
 <header>
     <div class="inner">
         <h3 id="page-title"><a href="/">WomensWiki</a></h3>
-        <SearchBar/>
+        <!-- <SearchBar/> -->
     </div>
 </header>
 <main>
     <slot/>
 </main>
+<footer>
+    <p>Copyright © OrangeBurrito 2024</p>
+</footer>
 
 <style>
-    header {
+    header, footer {
         background: var(--color-primary-light);
     }
     
-    header .inner {
+    header .inner, footer .inner {
         max-width: 85ch;
         display: flex;
         align-items: center;
         gap: 1rem;
-        padding: 0.5rem 1rem;
+        padding: 1rem;
         margin: 0 auto;
+    }
+
+    footer {
+        padding: 0.75rem 1rem;
+        text-align: center;
     }
 
     #page-title a {
@@ -38,6 +46,7 @@
     
     main {
         max-width: 900px;
+        flex-grow: 1;
         padding: 2rem 1rem;
         margin: 0 auto;
     }
