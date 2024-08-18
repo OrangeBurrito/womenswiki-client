@@ -54,8 +54,9 @@
 
     function createArticle() {
         creatingArticle = true
+        const infoboxTitle = /\|\s*title\s*=\s*(.*)/gm.exec(articleInput.content)
 
-        if (/\|\s*title\s*=\s*(.*)/gm.exec(articleInput.content)[1].trim() != articleInput.title.trim()) {
+        if (infoboxTitle != null && (infoboxTitle[1].trim() != articleInput.title.trim())) {
             errors = [{code: "Title", message: "Infobox title must match the article title"}]
             creatingArticle = false
             return

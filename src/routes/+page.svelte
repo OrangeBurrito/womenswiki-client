@@ -34,14 +34,13 @@
 		<p><strong>{$articles.data?.articles.length ?? '??'}</strong> articles and counting</p>
 	</div>
 	<img src="/images/underconstruction.png" alt="Under Construction">
-	<!-- <p><strong>WomensWiki</strong>, the free and open Radical Feminist Wiki</p> -->
 </section>
 <div class="content">
 	<section>
 		<h2>Categories</h2>
 		<List>
-			<CategoryBox href="/wiki/introduction">
-				<h3>Introduction</h3>
+			<CategoryBox href="/wiki/about_womenswiki">
+				<h3>About WomensWiki</h3>
 			</CategoryBox>
 			<CategoryBox href="/wiki/radical_feminism">
 				<h3>Radical Feminism</h3>
