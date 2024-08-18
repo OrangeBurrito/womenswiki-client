@@ -7,6 +7,17 @@
     setContextClient(client)
 </script>
 
+<svelte:head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id={import.meta.env.VITE_GOOGLE_ANALYTICS_ID}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', import.meta.env.VITE_GOOGLE_ANALYTICS_ID);
+    </script>
+</svelte:head>
+
 <header>
     <div class="inner">
         <h3 id="page-title"><a href="/">WomensWiki</a></h3>
