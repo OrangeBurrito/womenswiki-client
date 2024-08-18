@@ -46,3 +46,18 @@ query tags($input: GetTagsRequestInput!) {
   }
 }
 `
+
+export const ARTICLES_BY_TAG = gql`
+query articlesByTag($input: GetArticlesByTagRequestInput!) {
+    articlesByTag(input: $input) {
+        data {
+            slug
+            title
+        }
+        errors {
+            code
+            message
+        }
+    }
+}
+`

@@ -45,6 +45,10 @@ a, a:visited {
     color: inherit;
 }
 
+button:disabled {
+    cursor: not-allowed;
+}
+
 a:hover {
     font-weight: 600;
     border-width: 3.5px;

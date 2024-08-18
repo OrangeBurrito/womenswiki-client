@@ -11,7 +11,7 @@
         font-weight: 500;
         background: var(--color-primary-light);
         color: var(--color-primary-dark);
-        padding: 2px 0.5rem;
+        padding: 2px 6px;
         border-radius: 8px;
         border: 1.5px solid var(--color-primary);
     }

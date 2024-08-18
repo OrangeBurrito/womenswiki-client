@@ -116,7 +116,7 @@
 	.common-tags, .tags {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.5rem;
+		gap: 6px;
 		list-style: none;
 	}
 
@@ -125,7 +125,6 @@
 	}
 
 	.latest-articles {
-		max-width: 70%;
 		overflow-y: auto;
 	}
 

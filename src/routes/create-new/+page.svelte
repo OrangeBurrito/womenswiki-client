@@ -66,11 +66,11 @@
             if (res.fetching === false) {
                 result = res.data.createArticle
                 errors = result.errors
-                creatingArticle = false
-
+                
                 if (errors == null) {
                     goto(`/wiki/${result.data.slug}`)
                 }
+                creatingArticle = false
             }
         })
     }
@@ -106,7 +106,8 @@
     {/if}
 
     <MarkdownEditor {carta} mode="tabs" bind:value={articleInput.content} />
-    <button on:click={createArticle}>Create Article</button>
+    <!-- <button on:click={createArticle}>Create Article</button> -->
+    <button disabled>Create Article</button>
 </div>
 
 <style>
