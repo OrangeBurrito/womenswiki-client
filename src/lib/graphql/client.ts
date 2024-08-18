@@ -4,7 +4,7 @@ export const client = new Client({
     url: import.meta.env.VITE_GRAPHQL_API_URL,
     fetchOptions: () => ({
         headers: {
-            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
         }
     }),
     exchanges: [cacheExchange, fetchExchange],
