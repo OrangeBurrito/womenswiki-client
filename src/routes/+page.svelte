@@ -12,6 +12,7 @@
 		variables: {
 			input: {
 				'limit': 5,
+				'descending': true
 			}
 		}
 	})

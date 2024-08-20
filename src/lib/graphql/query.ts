@@ -35,6 +35,29 @@ query article($slug: String!) {
 }
 `
 
+export const TAG = gql`
+query getTag($input: GetTagRequestInput!) {
+    tag(input: $input) {
+        data {
+            id
+            createdAt
+            name
+            parentTags {
+              name
+            }
+            articles {
+              slug
+              title
+            }
+        }
+        errors {
+            code
+            message
+        }
+    }
+}
+`
+
 export const TAGS = gql`
 query tags($input: GetTagsRequestInput!) {
   tags(input: $input) {
@@ -42,6 +65,22 @@ query tags($input: GetTagsRequestInput!) {
       id
       createdAt
       name
+    }
+  }
+}
+`
+
+export const SUBTAGS = gql`
+query subtags($input: GetSubtagsRequestInput!) {
+  subtags(input: $input) {
+    data {
+      id
+      createdAt
+      name
+    }
+    errors {
+      code
+      message
     }
   }
 }

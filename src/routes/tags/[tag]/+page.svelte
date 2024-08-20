@@ -1,33 +1,52 @@
 <script lang="ts">
 	import type { PageServerData } from "./$types"
-	import { ARTICLES_BY_TAG } from "$lib/graphql/query"
+	import { SUBTAGS } from "$lib/graphql/query"
 	import { getContextClient, queryStore } from "@urql/svelte"
+	import { onMount } from "svelte"
+	import Tag from "$lib/components/Tag.svelte"
 
     export let data: PageServerData
 
-    const articles = queryStore({
+    const subtags = queryStore({
         client: getContextClient(),
-        query: ARTICLES_BY_TAG,
+        query: SUBTAGS,
         variables: {
             input: {
-                tag: data.tag,
-                limit: 10,
-                descending: true
+                tag: data.tag.name
             }
-        }
+        },
+        pause: true
+    })
+
+    onMount(() => {
+        subtags.resume()
     })
 </script>
 
-<h2>Tag: {data.tag}</h2>
-{#if $articles.fetching}
-    <p>Loading...</p>
-{:else if $articles.data.articlesByTag.errors}
-    <h2>{$articles.data.articlesByTag.errors[0].message}</h2>
-    <a href="/">Go Back</a>
-{:else}
+{#if data.tag}
+    <h2>Tag: <code>{data.tag.name}</code></h2>
+    {#if data.tag.parentTags.length > 0}
+    <h3>Parent Tags</h3>
+        <ul>
+        {#each data.tag.parentTags as parentTag}
+            <li><a href="/tags/{parentTag.name}">{parentTag.name}</a></li>
+        {/each}
+     </ul>
+    {/if}
+    <h3>Subtags</h3>
+    {#if !$subtags.fetching && $subtags.data}
     <ul>
-        {#each $articles.data.articlesByTag.data as article}
+        {#each $subtags.data.subtags.data as subtag}
+            <li><Tag name={subtag.name} /></li>
+        {/each}
+    </ul>
+    {/if}
+    <h3>Articles tagged with <code>{data.tag.name}</code></h3>
+    <ul>
+        {#each data.tag.articles as article}
             <li><a href="/wiki/{article.slug}">{article.title}</a></li>
         {/each}
     </ul>
+{:else}
+    <p>Tag Not Found</p>
 {/if}
