@@ -89,7 +89,6 @@
             <span>Title</span>
             <input type="text" id="article-title" bind:value={articleInput.title}>
         </label>
-        <Loading inline />
         <label for="article-tags">
             <div>Tags</div>
             {#if $tags.fetching}
@@ -115,20 +114,5 @@
 <style>
     :global(main) {
         width: 100%;
-    }
-    
-    .inputs {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        margin-bottom: 1rem;
-    }
-
-    label {
-        display: block;
-    }
-
-    label span {
-        margin-right: 0.5rem;
     }
 </style>

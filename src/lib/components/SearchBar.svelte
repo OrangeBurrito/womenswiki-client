@@ -1,5 +1,5 @@
 <script lang="ts">
-    let search
+    let search = ''
 </script>
 
 <div class="search-bar">

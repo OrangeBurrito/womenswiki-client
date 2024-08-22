@@ -62,8 +62,6 @@ export const TAGS = gql`
 query tags($input: GetTagsRequestInput!) {
   tags(input: $input) {
     data {
-      id
-      createdAt
       name
     }
   }

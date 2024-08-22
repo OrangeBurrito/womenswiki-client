@@ -73,6 +73,21 @@ ul, ol {
     margin-bottom: 1rem;
 }
 
+.inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+}
+
+label span {
+    margin-right: 0.5rem;
+}
+
 .carta-theme__default .carta-input {
     line-height: normal;
     font-size: 13px !important;

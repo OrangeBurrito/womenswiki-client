@@ -16,3 +16,19 @@ mutation createArticle($input: CreateArticleCommandInput!) {
     }
 }
 `
+
+export const CREATE_TAG = gql`
+mutation createTag($input: CreateTagCommandInput!) {
+  createTag(input: $input) {
+    data {
+      id
+      createdAt
+      name
+    }
+    errors {
+      code
+      message
+    }
+  }
+}
+`
