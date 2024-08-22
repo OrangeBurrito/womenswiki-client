@@ -2,7 +2,7 @@
     export let name: string
 </script>
 
-<a href="/tags/{name}" class="tag">{name}</a>
+<a href="/tags/{name}" class="tag" data-sveltekit-reload >{name}</a>
 
 <style>
     .tag {

@@ -39,16 +39,16 @@ export const TAG = gql`
 query getTag($input: GetTagRequestInput!) {
     tag(input: $input) {
         data {
-            id
-            createdAt
+          id
+          name
+          createdAt
+          parentTags {
             name
-            parentTags {
-              name
-            }
-            articles {
-              slug
-              title
-            }
+          }
+          articles {
+            slug
+            title
+          }
         }
         errors {
             code

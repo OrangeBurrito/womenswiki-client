@@ -58,9 +58,15 @@
     }
     
     main {
-        max-width: 900px;
+        width: 900px;
         flex-grow: 1;
         padding: 2rem 1rem;
         margin: 0 auto;
+    }
+
+    @media (max-width: 900px) {
+        main {
+            width: 100%;
+        }
     }
 </style>

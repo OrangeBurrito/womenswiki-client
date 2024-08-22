@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap');
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -33,7 +36,7 @@ p {
 }
 
 h1, h2, h3, h4 {
-    font-family: 'Source Serif Pro', serif;
+    font-family: 'Source Serif Pro', 'Source Serif', serif;
     font-weight: 600;
     line-height: 1;
 }
@@ -56,6 +59,10 @@ a:hover {
     font-weight: 600;
     border-width: 3.5px;
     color: var(--color-primary);
+}
+
+code {
+    font-size: 90%;
 }
 
 main h1, main h2 {
@@ -82,6 +89,7 @@ ul, ol {
     border-collapse: collapse;
     background: #f8f9fa;
     margin: 1rem;
+    margin-top: 0;
 }
 
 #infobox th:not(#image) {

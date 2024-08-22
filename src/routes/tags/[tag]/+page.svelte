@@ -4,49 +4,75 @@
 	import { getContextClient, queryStore } from "@urql/svelte"
 	import { onMount } from "svelte"
 	import Tag from "$lib/components/Tag.svelte"
+	import { page } from "$app/stores"
 
     export let data: PageServerData
-
-    const subtags = queryStore({
+    let tag = data.tag
+    
+    const subtagsQuery = queryStore({
         client: getContextClient(),
         query: SUBTAGS,
         variables: {
             input: {
-                tag: data.tag.name
+                tag: tag?.name
             }
         },
         pause: true
     })
-
+    
     onMount(() => {
-        subtags.resume()
+        subtagsQuery.resume()
     })
 </script>
 
-{#if data.tag}
-    <h2>Tag: <code>{data.tag.name}</code></h2>
-    {#if data.tag.parentTags.length > 0}
-    <h3>Parent Tags</h3>
+{#if tag}
+    <h1>Tag: <code>{tag.name}</code></h1>
+    {#if tag.parentTags.length > 0}
+    <h2>Parent Tags</h2>
         <ul>
-        {#each data.tag.parentTags as parentTag}
-            <li><a href="/tags/{parentTag.name}">{parentTag.name}</a></li>
+        {#each tag.parentTags as parentTag}
+            <li><Tag name={parentTag.name}/></li>
         {/each}
      </ul>
     {/if}
-    <h3>Subtags</h3>
-    {#if !$subtags.fetching && $subtags.data}
+    {#if !$subtagsQuery.fetching && $subtagsQuery.data?.subtags.data.length > 0}
+    <h2>Subtags</h2>
+    <em class="subtitle">This tag has {$subtagsQuery.data.subtags.data.length} subtags</em>
     <ul>
-        {#each $subtags.data.subtags.data as subtag}
+        {#each $subtagsQuery.data.subtags.data as subtag}
             <li><Tag name={subtag.name} /></li>
         {/each}
     </ul>
     {/if}
-    <h3>Articles tagged with <code>{data.tag.name}</code></h3>
+    {#if tag.articles.length > 0}
+    <h2>Articles tagged with <code>{tag.name}</code></h2>
+    <em class="subtitle">Showing {tag.articles.length} {tag.articles.length === 1 ? "article" : "articles"}</em>
     <ul>
-        {#each data.tag.articles as article}
+        {#each tag.articles as article}
             <li><a href="/wiki/{article.slug}">{article.title}</a></li>
         {/each}
     </ul>
+    {/if}
 {:else}
-    <p>Tag Not Found</p>
+    <h2>Tag "<code>{$page.params.tag}</code>" Not Found</h2>
+    <a href="/">Go Back</a>
 {/if}
+
+<style>
+    h1 {
+        margin-bottom: 1rem;
+    }
+
+    h2 {
+        margin-bottom: 1rem;
+    }
+    ul li {
+        margin-bottom: 0.25rem;
+    }
+
+    .subtitle {
+        display: block;
+        margin-top: -1rem;
+        margin-bottom: 0.5rem;
+    }
+</style>
