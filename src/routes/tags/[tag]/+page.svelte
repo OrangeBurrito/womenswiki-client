@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageServerData } from "./$types"
-	import { SUBTAGS } from "$lib/graphql/query"
+	import { SUBTAGS } from "$lib/graphql/operations/query"
 	import { getContextClient, queryStore } from "@urql/svelte"
 	import { onMount } from "svelte"
 	import Tag from "$lib/components/Tag.svelte"

@@ -2,11 +2,12 @@
 	import List from '$lib/components/List.svelte'
 	import Tag from '$lib/components/Tag.svelte'
 	import CategoryBox from '$lib/components/CategoryBox.svelte'
-	import { ARTICLES, TAGS } from "$lib/graphql/query"
+	import { ARTICLES, TAGS } from "$lib/graphql/operations/query"
 	import { getContextClient, queryStore } from "@urql/svelte"
 	import Loading from '$lib/components/Loading.svelte'
+	import type { ArticlesQuery, ArticlesQueryVariables, TagsQuery, TagsQueryVariables } from '$lib/graphql/types'
 
-	const articles = queryStore({
+	const articles = queryStore<ArticlesQuery, ArticlesQueryVariables>({
 		client: getContextClient(),
 		query: ARTICLES,
 		variables: {
@@ -17,7 +18,7 @@
 		}
 	})
 
-	const tags = queryStore({
+	const tags = queryStore<TagsQuery, TagsQueryVariables>({
 		client: getContextClient(),
 		query: TAGS,
 		variables: {

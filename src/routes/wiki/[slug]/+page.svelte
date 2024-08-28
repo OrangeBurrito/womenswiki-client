@@ -3,7 +3,7 @@
 	import Tag from '$lib/components/Tag.svelte'
 	import { remark, rehype } from '$lib/markdown/plugin'
 	import { getContextClient, queryStore } from '@urql/svelte'
-	import { ARTICLE_BY_SLUG } from '$lib/graphql/query'
+	import { ARTICLE_BY_SLUG } from '$lib/graphql/operations/query'
 	import { Carta, Markdown } from 'carta-md'
 	import { anchor } from '@cartamd/plugin-anchor'
 	import Loading from '$lib/components/Loading.svelte'

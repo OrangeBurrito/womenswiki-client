@@ -1,5 +1,5 @@
 import { client } from "$lib/graphql/client";
-import { TAG } from "$lib/graphql/query";
+import { TAG } from "$lib/graphql/operations/query";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({params}) => {

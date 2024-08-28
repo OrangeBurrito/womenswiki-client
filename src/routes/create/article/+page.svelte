@@ -7,9 +7,10 @@
 	import { rehype, remark } from '$lib/markdown/plugin'
     import 'carta-md/default.css'
 	import { getContextClient, queryStore, mutationStore } from '@urql/svelte'
-    import { TAGS } from '$lib/graphql/query'
-	import { CREATE_ARTICLE } from '$lib/graphql/mutation'
+    import { TAGS } from '$lib/graphql/operations/query'
+	import { CREATE_ARTICLE } from '$lib/graphql/operations/mutation'
 	import Loading from '$lib/components/Loading.svelte'
+	import type { CreateArticleMutation, CreateArticleMutationVariables, TagsQuery, TagsQueryVariables } from '$lib/graphql/types'
 
     const defaultContent = "{{ infobox\n| title = New Article \n| image = https://images.unsplash.com/photo-1722778610349-e3c02e277ec2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D \n| caption = a little caption \n| value one = some value \n| value two = [a link](https://orangeburrito.com) \n}}\n\nLorem ipsum dolor sit amet consectetur adipisicing elit. Tempora quam at, iste animi pariatur, fugit quod cupiditate, suscipit magnam totam aspernatur assumenda ipsum nihil laboriosam. Modi, ut. Nesciunt, ea temporibus.\n\nLorem ipsum dolor sit amet consectetur adipisicing elit. Nihil voluptatum ea corporis itaque architecto veritatis sed ipsum? Quas placeat vel dolor explicabo velit quia quos.\n\nThe below header is required to generate an optional Table of Contents\n## Contents\n\n## First Header\nSome content\n\nSome content that has a citation below[^1]\n\n## Second Header\n![A brief caption of an image](https://upload.wikimedia.org/wikipedia/commons/a/a7/Caspar_David_Friedrich%27s_Chalk_Cliffs_on_R%C3%BCgen.jpg)\n\nimages should be right below headers\n\nSome other content that also has a citation[^2]\n\n[^1]:[URL to source](https://thesource.com)\n[^2]:Citation that does not contain a link, bad practice"
 
@@ -23,7 +24,7 @@
 
     const client = getContextClient()
 
-    const tags = queryStore({
+    const tags = queryStore<TagsQuery, TagsQueryVariables>({
         client,
         query: TAGS,
         variables: {
@@ -34,7 +35,7 @@
     })
     
     const createArticleMutation = (input: any) => {
-        return mutationStore({
+        return mutationStore<CreateArticleMutation, CreateArticleMutationVariables>({
             client,
             query: CREATE_ARTICLE,
             variables: {

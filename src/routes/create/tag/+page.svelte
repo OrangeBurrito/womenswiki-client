@@ -1,15 +1,16 @@
 <script lang="ts">
     import Overlay from '$lib/components/Overlay.svelte'
     import Errors from '$lib/components/Errors.svelte'
-	import { TAGS } from '$lib/graphql/query'
-    import { CREATE_TAG } from '$lib/graphql/mutation'
+	import { TAGS } from '$lib/graphql/operations/query'
+    import { CREATE_TAG } from '$lib/graphql/operations/mutation'
     import { debounce } from '$lib/util'
     import { getContextClient, mutationStore, queryStore } from '@urql/svelte'
 	import { goto } from '$app/navigation'
+	import type { CreateTagMutation, CreateTagMutationVariables, TagsQuery, TagsQueryVariables } from '$lib/graphql/types'
 
     const client = getContextClient()
 
-    const tagsQuery = queryStore({
+    const tagsQuery = queryStore<TagsQuery, TagsQueryVariables>({
         client,
         query: TAGS,
         variables: {
@@ -19,7 +20,7 @@
         }
     })
     const createTagMutation = (input: any) => {
-        return mutationStore({
+        return mutationStore<CreateTagMutation, CreateTagMutationVariables>({
             client,
             query: CREATE_TAG,
             variables: {
