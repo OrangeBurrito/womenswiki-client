@@ -145,7 +145,7 @@ label span {
 }
 
 .markdown-body {
-    p, a, th#caption, figcaption {
+    p, li, a, th#caption, figcaption {
         font-family: var(--font-serif);
         font-size: 18px;
     }

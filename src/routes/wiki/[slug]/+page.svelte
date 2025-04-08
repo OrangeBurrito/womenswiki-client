@@ -29,7 +29,7 @@
 	<h2>{$article.data.articleBySlug.errors[0].message}</h2>
 	<a href="/">Go Back</a>
 {:else}
-<article>
+<article data-sveltekit-reload>
 	<div class="wrap">
 		<div class="heading">
 			<h1 class="article-title">{$article.data.articleBySlug.data.title}</h1>
