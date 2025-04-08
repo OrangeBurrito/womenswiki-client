@@ -34,9 +34,12 @@
 	<div class="text">
 		<h2>WomensWiki</h2>
 		<em>The Radical Feminist Wiki<br>exclusively for, and by women</em>
-		<p><strong>{$articles.data?.articles.length ?? '??'}</strong> articles and counting</p>
+		<!-- <p><strong>{$articles.data?.articles.length ?? '??'}</strong> articles and counting</p> -->
 	</div>
 	<img src="/images/underconstruction.png" alt="Under Construction">
+</section>
+<section>
+
 </section>
 <div class="content">
 	<section>
@@ -64,7 +67,7 @@
 		{:else}
 		<div class="common-tags">
 			{#each $tags.data.tags.data as tag}
-				<Tag name={tag.name}/>
+				<Tag name={tag.name} color={tag.color.value}/>
 			{/each}
 		</div>
 		{/if}

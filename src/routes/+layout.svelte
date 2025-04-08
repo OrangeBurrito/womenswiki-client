@@ -1,9 +1,8 @@
 <script lang="ts">
     import { setContextClient } from '@urql/svelte'
     import { client } from '$lib/graphql/client'
-    import SearchBar from '$lib/components/SearchBar.svelte'
-    import '$lib/style.css'
 	import type { LayoutServerData } from './$types'
+    import '$lib/styles/global.css'
 
     export let data: LayoutServerData
 

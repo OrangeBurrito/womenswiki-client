@@ -7,7 +7,7 @@
 	import { page } from "$app/stores"
 
     export let data: PageServerData
-    let tag = data.tag
+    let tag = data?.tag
     
     const subtagsQuery = queryStore({
         client: getContextClient(),
@@ -31,7 +31,7 @@
     <h2>Parent Tags</h2>
         <ul>
         {#each tag.parentTags as parentTag}
-            <li><Tag name={parentTag.name}/></li>
+            <li><Tag name={parentTag.name} color={parentTag.color.value}/></li>
         {/each}
      </ul>
     {/if}
@@ -40,7 +40,7 @@
     <em class="subtitle">This tag has {$subtagsQuery.data.subtags.data.length} subtags</em>
     <ul>
         {#each $subtagsQuery.data.subtags.data as subtag}
-            <li><Tag name={subtag.name} /></li>
+            <li><Tag name={subtag.name} color={subtag.color.value} /></li>
         {/each}
     </ul>
     {/if}

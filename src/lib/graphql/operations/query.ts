@@ -25,6 +25,9 @@ query article($slug: String!) {
       content
       tags {
         name
+        color {
+          value
+        }
       }
     }
     errors {
@@ -41,9 +44,15 @@ query getTag($input: GetTagRequestInput!) {
         data {
           id
           name
-          createdAt
+          color {
+            name
+            value
+          }
           parentTags {
             name
+            color {
+              value
+            }
           }
           articles {
             slug
@@ -63,6 +72,9 @@ query tags($input: GetTagsRequestInput!) {
   tags(input: $input) {
     data {
       name
+      color {
+        value
+      }
     }
   }
 }
@@ -75,6 +87,9 @@ query subtags($input: GetSubtagsRequestInput!) {
       id
       createdAt
       name
+      color {
+        value
+      }
     }
     errors {
       code

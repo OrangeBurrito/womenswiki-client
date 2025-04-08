@@ -1,23 +1,28 @@
 <script lang="ts">
-    export let name: string
+    interface Props {
+        name: string
+        color: string
+    }
+
+    let { name, color}: Props = $props()
 </script>
 
-<a href="/tags/{name}" class="tag" data-sveltekit-reload >{name}</a>
+<a href="/tags/{name}" class="tag" style="--color-tag: #{color}" data-sveltekit-reload >{name}</a>
 
 <style>
     .tag {
         display: inline-block;
-        font-size: var(--text-s);
-        font-weight: 500;
-        background: var(--color-primary-light);
-        color: var(--color-primary-dark);
-        padding: 2px 6px;
+        font-size: 16px;
+        font-weight: 400;
+        color: var(--color-text-inverted);
+        background-color: var(--color-tag);
+        padding: 2px 8px;
         border-radius: 8px;
-        border: 1.5px solid var(--color-primary);
+        border-bottom: none;
     }
 
     .tag:hover {
-        font-weight: 700;
-        box-shadow: inset 0px 0px 0px 0.5px var(--color-primary-dark);
+        background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25));
+        /* box-shadow: inset 0px 0px 0px 0.5px var(--color-primary-dark); */
     }
 </style>

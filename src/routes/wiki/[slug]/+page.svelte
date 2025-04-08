@@ -38,7 +38,7 @@
 			{/if}
 			<div class="tags">
 				{#each $article.data.articleBySlug.data.tags as tag}
-					<Tag name={tag.name} />
+					<Tag name={tag.name} color={tag.color.value} />
 				{/each}
 			</div>
 		</div>
