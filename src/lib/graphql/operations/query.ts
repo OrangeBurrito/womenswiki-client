@@ -14,9 +14,9 @@ query articles($input: GetArticlesRequestInput!) {
   }
 }`
 
-export const ARTICLE_BY_SLUG = gql`
-query article($slug: String!) {
-  articleBySlug(slug: $slug) {
+export const ARTICLE_BY_TITLE = gql`
+query article($title: String!) {
+  articleByTitle(title: $title) {
     data {
       id
       createdAt
@@ -55,7 +55,6 @@ query getTag($input: GetTagRequestInput!) {
             }
           }
           articles {
-            slug
             title
           }
         }

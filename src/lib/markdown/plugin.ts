@@ -22,7 +22,7 @@ const remarkTransformer: UnifiedTransformer<'sync'> = {
     }
 }
 
-const rehypetransformer: UnifiedTransformer<'sync'> = {
+const rehypeTransformer: UnifiedTransformer<'sync'> = {
     execution: 'sync',
     type: 'rehype',
     transform: ({processor}) => {
@@ -32,4 +32,4 @@ const rehypetransformer: UnifiedTransformer<'sync'> = {
 }
 
 export const remark = (): Plugin => ({transformers: [remarkTransformer]})
-export const rehype = (): Plugin => ({transformers: [rehypetransformer]})
+export const rehype = (): Plugin => ({transformers: [rehypeTransformer]})

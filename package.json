@@ -48,7 +48,8 @@
     "type": "module",
     "dependencies": {
         "@urql/svelte": "^4.2.1",
-        "carta-md": "^4.4.4",
-        "graphql": "^16.9.0"
+        "carta-md": "^4.9.0",
+        "graphql": "^16.9.0",
+        "isomorphic-dompurify": "^2.23.0"
     }
 }

@@ -5,11 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "chrome",
-            "request": "launch",
-            "name": "Launch Chrome against localhost",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}"
-        }
+			"command": "pnpm dev",
+			"name": "Run development server",
+			"request": "launch",
+			"type": "node-terminal"
+		}
     ]
 }

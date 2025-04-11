@@ -6,3 +6,5 @@ export const debounce = (callback: Function, delay: number) => {
         timer = setTimeout(() => callback(...args), delay)
     }
 }
+
+export const formatTitle = (title: string) => title.split("_").join(" ")

@@ -5,6 +5,7 @@
 	import { onMount } from "svelte"
 	import Tag from "$lib/components/Tag.svelte"
 	import { page } from "$app/stores"
+	import { formatTitle } from "$lib/util"
 
     export let data: PageServerData
     let tag = data?.tag
@@ -14,7 +15,10 @@
         query: SUBTAGS,
         variables: {
             input: {
-                tag: tag?.name
+                tag: tag?.name,
+                descending: false,
+                limit: 10,
+                offset: 0
             }
         },
         pause: true
@@ -36,20 +40,20 @@
      </ul>
     {/if}
     {#if !$subtagsQuery.fetching && $subtagsQuery.data?.subtags.data.length > 0}
-    <h2>Subtags</h2>
-    <em class="subtitle">This tag has {$subtagsQuery.data.subtags.data.length} subtags</em>
-    <ul>
-        {#each $subtagsQuery.data.subtags.data as subtag}
-            <li><Tag name={subtag.name} color={subtag.color.value} /></li>
-        {/each}
-    </ul>
+        <h2>Subtags</h2>
+        <em class="subtitle">This tag has {$subtagsQuery.data.subtags.data.length} subtags</em>
+        <ul>
+            {#each $subtagsQuery.data.subtags.data as subtag}
+                <li><Tag name={subtag.name} color={subtag.color.value} /></li>
+            {/each}
+        </ul>
     {/if}
     {#if tag.articles.length > 0}
     <h2>Articles tagged with <code>{tag.name}</code></h2>
     <em class="subtitle">Showing {tag.articles.length} {tag.articles.length === 1 ? "article" : "articles"}</em>
     <ul>
         {#each tag.articles as article}
-            <li><a href="/wiki/{article.slug}">{article.title}</a></li>
+            <li><a href="/wiki/{article.title}">{formatTitle(article.title)}</a></li>
         {/each}
     </ul>
     {/if}
