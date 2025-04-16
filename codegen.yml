@@ -1,6 +1,6 @@
 schema: ${VITE_GRAPHQL_API_URL}
 documents:
-  - 'src/lib/graphql/operations/*.ts'
+  - 'src/lib/graphql/operations/**/*.gql'
 generates:
   src/lib/graphql/types.ts:
     plugins:

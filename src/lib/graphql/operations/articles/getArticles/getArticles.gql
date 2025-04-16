@@ -1,0 +1,14 @@
+query articles($input: GetArticlesRequestInput!) {
+  articles(input: $input) {
+    id
+    createdAt
+    updatedAt
+    title
+    tags {
+      name
+      color {
+        value
+      }
+    }
+  }
+}

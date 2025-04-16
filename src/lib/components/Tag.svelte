@@ -4,7 +4,7 @@
         color: string
     }
 
-    let { name, color}: Props = $props()
+    let { name, color }: Props = $props()
 </script>
 
 <a href="/tags/{name}" class="tag" style="--color-tag: #{color}" data-sveltekit-reload >{name}</a>
@@ -23,6 +23,5 @@
 
     .tag:hover {
         background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25));
-        /* box-shadow: inset 0px 0px 0px 0.5px var(--color-primary-dark); */
     }
 </style>

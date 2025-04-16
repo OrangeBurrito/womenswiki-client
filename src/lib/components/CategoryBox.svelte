@@ -1,13 +1,19 @@
 <script lang="ts">
-    export let href = '';
-    export let disabled = false
+	import type { Snippet } from "svelte"
+
+    interface Props {
+        children: Snippet
+        href: string
+        disabled?: boolean
+    }
+
+    let { children,  href, disabled = false }: Props = $props()
 </script>
 
-<a {href} class:disabled >
-    <div class="category-box">
-        <slot/>
-    </div>
-</a>
+<div class="category-box" class:disabled>
+    <a class="overlay-link" href={href} ></a>
+    {@render children()}
+</div>
 
 <style>
     .category-box {
@@ -16,21 +22,25 @@
         align-items: center;
         padding: 0.75rem 1rem;
         border: 2px solid var(--color-primary-light); 
-    }
 
-    .category-box:hover {
-        color: var(--color-primary-dark);
-        border-color: var(--color-primary)
-    }
+        &:hover {
+            color: var(--color-primary-dark);
+            border-color: var(--color-primary)
+        }
 
-    a {
-        display: block;
-        border-bottom: none;
-    }
+        &.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
 
-    a.disabled {
-        pointer-events: none;
-        opacity: 0.5;
+        .overlay-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+        }
     }
 
     .category-box :global(h3) {

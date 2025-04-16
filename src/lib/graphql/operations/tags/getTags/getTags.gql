@@ -1,0 +1,10 @@
+query tags($input: GetTagsRequestInput!) {
+  tags(input: $input) {
+    data {
+      name
+      color {
+        value
+      }
+    }
+  }
+}

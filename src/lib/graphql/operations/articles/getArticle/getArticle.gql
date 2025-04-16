@@ -1,0 +1,21 @@
+query article($title: String!) {
+  articleByTitle(title: $title) {
+    data {
+      id
+      createdAt
+      updatedAt
+      title
+      content
+      tags {
+        name
+        color {
+          value
+        }
+      }
+    }
+    errors {
+      code
+      message
+    }
+  }
+}

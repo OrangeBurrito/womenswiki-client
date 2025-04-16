@@ -14,30 +14,6 @@ query articles($input: GetArticlesRequestInput!) {
   }
 }`
 
-export const ARTICLE_BY_TITLE = gql`
-query article($title: String!) {
-  articleByTitle(title: $title) {
-    data {
-      id
-      createdAt
-      updatedAt
-      title
-      content
-      tags {
-        name
-        color {
-          value
-        }
-      }
-    }
-    errors {
-      code
-      message
-    }
-  }
-}
-`
-
 export const TAG = gql`
 query getTag($input: GetTagRequestInput!) {
     tag(input: $input) {

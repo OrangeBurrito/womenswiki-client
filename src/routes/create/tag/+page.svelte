@@ -83,4 +83,5 @@
         <input type="text" id="tag-name" bind:value={tagInput.name}>
     </label>
 </div>
-<button onclick={createTag}>Create Tag</button>
+<button disabled>Create Tag</button>
+<!-- <button onclick={createTag}>Create Tag</button> -->

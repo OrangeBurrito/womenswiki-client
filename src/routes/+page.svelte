@@ -1,40 +1,23 @@
 <script lang="ts">
+	import type { PageProps } from './$types'
 	import List from '$lib/components/List.svelte'
 	import Tag from '$lib/components/Tag.svelte'
 	import CategoryBox from '$lib/components/CategoryBox.svelte'
-	import { ARTICLES, TAGS } from "$lib/graphql/operations/query"
-	import { getContextClient, queryStore } from "@urql/svelte"
 	import Loading from '$lib/components/Loading.svelte'
-	import type { ArticlesQuery, ArticlesQueryVariables, TagsQuery, TagsQueryVariables } from '$lib/graphql/types'
+	import { formatTitle } from '$lib/util'
 
-	const articles = queryStore<ArticlesQuery, ArticlesQueryVariables>({
-		client: getContextClient(),
-		query: ARTICLES,
-		variables: {
-			input: {
-				'limit': 5,
-				'descending': true
-			}
-		}
-	})
+	let { data }: PageProps = $props()
 
-	const tags = queryStore<TagsQuery, TagsQueryVariables>({
-		client: getContextClient(),
-		query: TAGS,
-		variables: {
-			input: {
-				'limit': 10,
-				'descending': true
-			}
-		}
-	})
+	console.log(data)
+
+	let { articles, tags } = data
 </script>
 
 <section class="center">
 	<div class="text">
 		<h2>WomensWiki</h2>
 		<em>The Radical Feminist Wiki<br>exclusively for, and by women</em>
-		<!-- <p><strong>{$articles.data?.articles.length ?? '??'}</strong> articles and counting</p> -->
+		<p><strong>{articles ? articles.length : '??'}</strong> articles and counting</p>
 	</div>
 	<img src="/images/underconstruction.png" alt="Under Construction">
 </section>
@@ -61,29 +44,25 @@
 				<h3>Other Websites & Resources</h3>
 			</CategoryBox>
 		</List>
-		<h2>Common Tags</h2>
-		{#if $tags.fetching}
-			<Loading inline />
-		{:else}
-		<div class="common-tags">
-			{#each $tags.data.tags.data as tag}
-				<Tag name={tag.name} color={tag.color.value}/>
-			{/each}
-		</div>
+		<h2>Tags</h2>
+		{#if tags}
+			<div class="common-tags">
+				{#each tags as tag}
+					<Tag name={tag.name} color={tag.color.value}/>
+				{/each}
+			</div>
 		{/if}
 	</section>
 	<section class="latest-articles">
 		<h2>Latest Articles</h2>
-		{#if $articles.fetching}
-			<Loading/>
-		{:else}
+		{#if articles}
 			<List>
-				{#each $articles.data.articles as article}
-				<CategoryBox href="/wiki/{article.slug}">
-					<h3>{article.title}</h3>
+				{#each articles as article}
+				<CategoryBox href="/wiki/{article.title}">
+					<h3>{formatTitle(article.title)}</h3>
 					<div class="tags">
 						{#each article.tags as tag}
-							<Tag name={tag.name}/>
+							<Tag name={tag.name} color={tag.color.value}/>
 						{/each}
 					</div>
 				</CategoryBox>

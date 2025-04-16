@@ -7,7 +7,6 @@ mutation createArticle($input: CreateArticleCommandInput!) {
             createdAt
             title
             content
-            slug
         }
         errors {
             code

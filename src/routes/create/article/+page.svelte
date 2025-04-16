@@ -110,7 +110,8 @@
     {/if}
 
     <MarkdownEditor {carta} mode="tabs" bind:value={articleInput.content} />
-    <button on:click={createArticle}>Create Article</button>
+    <button disabled>Create Article</button>
+    <!-- <button on:click={createArticle}>Create Article</button> -->
 </div>
 
 <style>

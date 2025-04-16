@@ -19,11 +19,10 @@ export type Scalars = {
 
 export type Article = {
   __typename?: 'Article';
-  content: Scalars['String']['output'];
   createdAt: Scalars['DateTime']['output'];
   history: Array<Revision>;
   id: Scalars['UUID']['output'];
-  slug: Scalars['String']['output'];
+  latestVersion?: Maybe<Scalars['String']['output']>;
   tags: Array<Tag>;
   title: Scalars['String']['output'];
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -34,7 +33,6 @@ export type ArticleResponse = {
   content: Scalars['String']['output'];
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['UUID']['output'];
-  slug: Scalars['String']['output'];
   tags: Array<Tag>;
   title: Scalars['String']['output'];
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -44,9 +42,29 @@ export type ArticleResponseSortInput = {
   content?: InputMaybe<SortEnumType>;
   createdAt?: InputMaybe<SortEnumType>;
   id?: InputMaybe<SortEnumType>;
-  slug?: InputMaybe<SortEnumType>;
   title?: InputMaybe<SortEnumType>;
   updatedAt?: InputMaybe<SortEnumType>;
+};
+
+export type Color = {
+  __typename?: 'Color';
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['UUID']['output'];
+  name: Scalars['String']['output'];
+  value: Scalars['String']['output'];
+};
+
+export type ColorResponse = {
+  __typename?: 'ColorResponse';
+  name: Scalars['String']['output'];
+  value: Scalars['String']['output'];
+};
+
+export type ColorSortInput = {
+  createdAt?: InputMaybe<SortEnumType>;
+  id?: InputMaybe<SortEnumType>;
+  name?: InputMaybe<SortEnumType>;
+  value?: InputMaybe<SortEnumType>;
 };
 
 export type CreateArticleCommandInput = {
@@ -61,12 +79,17 @@ export type CreateArticleResponse = {
   content: Scalars['String']['output'];
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['UUID']['output'];
-  slug: Scalars['String']['output'];
   tags?: Maybe<Array<Tag>>;
   title: Scalars['String']['output'];
 };
 
+export type CreateColorCommandInput = {
+  name: Scalars['String']['input'];
+  value: Scalars['String']['input'];
+};
+
 export type CreateTagCommandInput = {
+  color: Scalars['String']['input'];
   name: Scalars['String']['input'];
   parentTag?: InputMaybe<Scalars['String']['input']>;
 };
@@ -118,14 +141,21 @@ export type GetTagsRequestInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   createArticle: ResultOfCreateArticleResponse;
+  createColor: ResultOfColorResponse;
   createTag: ResultOfTagResponse;
   updateArticle: ResultOfArticleResponse;
   updateArticleTags: ResultOfArticleResponse;
+  updateTagColor: ResultOfTagResponse;
 };
 
 
 export type MutationCreateArticleArgs = {
   input: CreateArticleCommandInput;
+};
+
+
+export type MutationCreateColorArgs = {
+  input: CreateColorCommandInput;
 };
 
 
@@ -143,13 +173,18 @@ export type MutationUpdateArticleTagsArgs = {
   input: UpdateArticleTagsCommandInput;
 };
 
+
+export type MutationUpdateTagColorArgs = {
+  input: UpdateTagColorCommandInput;
+};
+
 export type Query = {
   __typename?: 'Query';
   articleById: ResultOfArticleResponse;
-  articleBySlug: ResultOfArticleResponse;
+  articleByTitle: ResultOfArticleResponse;
   articles: Array<ArticleResponse>;
   articlesByTag: ResultOfListOfArticleResponse;
-  nestedSubtags: ResultOfListOfTagResponse;
+  nestedSubtags: ResultOfTagTree;
   subtags: ResultOfListOfTagResponse;
   tag: ResultOfTagResponse;
   tags: ResultOfListOfTagResponse;
@@ -162,8 +197,8 @@ export type QueryArticleByIdArgs = {
 };
 
 
-export type QueryArticleBySlugArgs = {
-  slug: Scalars['String']['input'];
+export type QueryArticleByTitleArgs = {
+  title: Scalars['String']['input'];
 };
 
 
@@ -181,7 +216,7 @@ export type QueryArticlesByTagArgs = {
 
 export type QueryNestedSubtagsArgs = {
   input: GetNestedSubtagsRequestInput;
-  order?: InputMaybe<Array<ResultOfListOfTagResponseSortInput>>;
+  order?: InputMaybe<Array<ResultOfTagTreeSortInput>>;
 };
 
 
@@ -203,12 +238,20 @@ export type QueryTagsArgs = {
 
 
 export type QueryUpdateTagArgs = {
-  input: UpdateTagRequestInput;
+  input: UpdateTagCommandInput;
 };
 
 export type ResultOfArticleResponse = {
   __typename?: 'ResultOfArticleResponse';
   data?: Maybe<ArticleResponse>;
+  errors?: Maybe<Array<Error>>;
+  isFailure: Scalars['Boolean']['output'];
+  isSuccess: Scalars['Boolean']['output'];
+};
+
+export type ResultOfColorResponse = {
+  __typename?: 'ResultOfColorResponse';
+  data?: Maybe<ColorResponse>;
   errors?: Maybe<Array<Error>>;
   isFailure: Scalars['Boolean']['output'];
   isSuccess: Scalars['Boolean']['output'];
@@ -256,6 +299,20 @@ export type ResultOfTagResponse = {
   isSuccess: Scalars['Boolean']['output'];
 };
 
+export type ResultOfTagTree = {
+  __typename?: 'ResultOfTagTree';
+  data?: Maybe<TagTree>;
+  errors?: Maybe<Array<Error>>;
+  isFailure: Scalars['Boolean']['output'];
+  isSuccess: Scalars['Boolean']['output'];
+};
+
+export type ResultOfTagTreeSortInput = {
+  data?: InputMaybe<TagTreeSortInput>;
+  isFailure?: InputMaybe<SortEnumType>;
+  isSuccess?: InputMaybe<SortEnumType>;
+};
+
 export type Revision = {
   __typename?: 'Revision';
   article: Article;
@@ -275,6 +332,7 @@ export enum SortEnumType {
 export type Tag = {
   __typename?: 'Tag';
   articles: Array<Article>;
+  color: Color;
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['UUID']['output'];
   name: Scalars['String']['output'];
@@ -284,10 +342,28 @@ export type Tag = {
 export type TagResponse = {
   __typename?: 'TagResponse';
   articles?: Maybe<Array<Article>>;
+  color: Color;
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['UUID']['output'];
   name: Scalars['String']['output'];
   parentTags?: Maybe<Array<Tag>>;
+};
+
+export type TagSortInput = {
+  color?: InputMaybe<ColorSortInput>;
+  createdAt?: InputMaybe<SortEnumType>;
+  id?: InputMaybe<SortEnumType>;
+  name?: InputMaybe<SortEnumType>;
+};
+
+export type TagTree = {
+  __typename?: 'TagTree';
+  subtags: Array<TagTree>;
+  tag: Tag;
+};
+
+export type TagTreeSortInput = {
+  tag?: InputMaybe<TagSortInput>;
 };
 
 export type UpdateArticleCommandInput = {
@@ -303,7 +379,12 @@ export type UpdateArticleTagsCommandInput = {
   tags: Array<Scalars['String']['input']>;
 };
 
-export type UpdateTagRequestInput = {
+export type UpdateTagColorCommandInput = {
+  color: Scalars['String']['input'];
+  tag: Scalars['String']['input'];
+};
+
+export type UpdateTagCommandInput = {
   parentTag: Scalars['String']['input'];
   tag: Scalars['String']['input'];
 };
@@ -316,68 +397,28 @@ export type User = {
   username: Scalars['String']['output'];
 };
 
-export type CreateArticleMutationVariables = Exact<{
-  input: CreateArticleCommandInput;
+export type ArticleQueryVariables = Exact<{
+  title: Scalars['String']['input'];
 }>;
 
 
-export type CreateArticleMutation = { __typename?: 'Mutation', createArticle: { __typename?: 'ResultOfCreateArticleResponse', data?: { __typename?: 'CreateArticleResponse', createdAt: any, title: string, content: string, slug: string } | null, errors?: Array<{ __typename?: 'Error', code: string, message?: string | null }> | null } };
-
-export type CreateTagMutationVariables = Exact<{
-  input: CreateTagCommandInput;
-}>;
-
-
-export type CreateTagMutation = { __typename?: 'Mutation', createTag: { __typename?: 'ResultOfTagResponse', data?: { __typename?: 'TagResponse', id: any, createdAt: any, name: string } | null, errors?: Array<{ __typename?: 'Error', code: string, message?: string | null }> | null } };
+export type ArticleQuery = { __typename?: 'Query', articleByTitle: { __typename?: 'ResultOfArticleResponse', data?: { __typename?: 'ArticleResponse', id: any, createdAt: any, updatedAt?: any | null, title: string, content: string, tags: Array<{ __typename?: 'Tag', name: string, color: { __typename?: 'Color', value: string } }> } | null, errors?: Array<{ __typename?: 'Error', code: string, message?: string | null }> | null } };
 
 export type ArticlesQueryVariables = Exact<{
   input: GetArticlesRequestInput;
 }>;
 
 
-export type ArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'ArticleResponse', id: any, createdAt: any, title: string, content: string, slug: string, tags: Array<{ __typename?: 'Tag', name: string }> }> };
-
-export type ArticleQueryVariables = Exact<{
-  slug: Scalars['String']['input'];
-}>;
-
-
-export type ArticleQuery = { __typename?: 'Query', articleBySlug: { __typename?: 'ResultOfArticleResponse', data?: { __typename?: 'ArticleResponse', id: any, createdAt: any, updatedAt?: any | null, title: string, content: string, tags: Array<{ __typename?: 'Tag', name: string }> } | null, errors?: Array<{ __typename?: 'Error', code: string, message?: string | null }> | null } };
-
-export type GetTagQueryVariables = Exact<{
-  input: GetTagRequestInput;
-}>;
-
-
-export type GetTagQuery = { __typename?: 'Query', tag: { __typename?: 'ResultOfTagResponse', data?: { __typename?: 'TagResponse', id: any, name: string, createdAt: any, parentTags?: Array<{ __typename?: 'Tag', name: string }> | null, articles?: Array<{ __typename?: 'Article', slug: string, title: string }> | null } | null, errors?: Array<{ __typename?: 'Error', code: string, message?: string | null }> | null } };
+export type ArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'ArticleResponse', id: any, createdAt: any, title: string, content: string, tags: Array<{ __typename?: 'Tag', name: string }> }> };
 
 export type TagsQueryVariables = Exact<{
   input: GetTagsRequestInput;
 }>;
 
 
-export type TagsQuery = { __typename?: 'Query', tags: { __typename?: 'ResultOfListOfTagResponse', data?: Array<{ __typename?: 'TagResponse', name: string } | null> | null } };
-
-export type SubtagsQueryVariables = Exact<{
-  input: GetSubtagsRequestInput;
-}>;
+export type TagsQuery = { __typename?: 'Query', tags: { __typename?: 'ResultOfListOfTagResponse', data?: Array<{ __typename?: 'TagResponse', name: string, color: { __typename?: 'Color', value: string } } | null> | null } };
 
 
-export type SubtagsQuery = { __typename?: 'Query', subtags: { __typename?: 'ResultOfListOfTagResponse', data?: Array<{ __typename?: 'TagResponse', id: any, createdAt: any, name: string } | null> | null, errors?: Array<{ __typename?: 'Error', code: string, message?: string | null }> | null } };
-
-export type ArticlesByTagQueryVariables = Exact<{
-  input: GetArticlesByTagRequestInput;
-}>;
-
-
-export type ArticlesByTagQuery = { __typename?: 'Query', articlesByTag: { __typename?: 'ResultOfListOfArticleResponse', data?: Array<{ __typename?: 'ArticleResponse', slug: string, title: string } | null> | null, errors?: Array<{ __typename?: 'Error', code: string, message?: string | null }> | null } };
-
-
-export const CreateArticleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createArticle"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateArticleCommandInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createArticle"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}}]}},{"kind":"Field","name":{"kind":"Name","value":"errors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]}}]} as unknown as DocumentNode<CreateArticleMutation, CreateArticleMutationVariables>;
-export const CreateTagDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createTag"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateTagCommandInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createTag"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"errors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]}}]} as unknown as DocumentNode<CreateTagMutation, CreateTagMutationVariables>;
-export const ArticlesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"articles"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GetArticlesRequestInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"articles"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<ArticlesQuery, ArticlesQueryVariables>;
-export const ArticleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"article"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"slug"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"articleBySlug"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"slug"},"value":{"kind":"Variable","name":{"kind":"Name","value":"slug"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"errors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]}}]} as unknown as DocumentNode<ArticleQuery, ArticleQueryVariables>;
-export const GetTagDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getTag"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GetTagRequestInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tag"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"parentTags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"articles"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"errors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]}}]} as unknown as DocumentNode<GetTagQuery, GetTagQueryVariables>;
-export const TagsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"tags"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GetTagsRequestInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<TagsQuery, TagsQueryVariables>;
-export const SubtagsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"subtags"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GetSubtagsRequestInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"subtags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"errors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]}}]} as unknown as DocumentNode<SubtagsQuery, SubtagsQueryVariables>;
-export const ArticlesByTagDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"articlesByTag"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GetArticlesByTagRequestInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"articlesByTag"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"Field","name":{"kind":"Name","value":"errors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]}}]} as unknown as DocumentNode<ArticlesByTagQuery, ArticlesByTagQueryVariables>;
+export const ArticleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"article"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"articleByTitle"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"color"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"errors"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]}}]} as unknown as DocumentNode<ArticleQuery, ArticleQueryVariables>;
+export const ArticlesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"articles"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GetArticlesRequestInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"articles"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<ArticlesQuery, ArticlesQueryVariables>;
+export const TagsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"tags"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GetTagsRequestInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"color"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]}}]}}]}}]} as unknown as DocumentNode<TagsQuery, TagsQueryVariables>;
