@@ -2,9 +2,9 @@ import getArticleQuery from "$lib/graphql/operations/articles/getArticle/getArti
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({params}) => {
-    const result = await getArticleQuery(params.slug);
+    const article = await getArticleQuery(params.slug);
 
     return {
-        result
+        article
     }
 }

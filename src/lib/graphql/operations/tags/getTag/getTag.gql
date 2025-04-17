@@ -1,0 +1,19 @@
+query getTag($input: GetTagRequestInput!) {
+    tag(input: $input) {
+        data {
+          id
+          name
+          createdAt
+          parentTags {
+            name
+          }
+          articles {
+            title
+          }
+        }
+        errors {
+            code
+            message
+        }
+    }
+}

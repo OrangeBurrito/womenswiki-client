@@ -8,7 +8,8 @@
 	import { formatTitle } from "$lib/util"
 
     export let data: PageServerData
-    let tag = data?.tag
+
+    let { tag } = data
     
     const subtagsQuery = queryStore({
         client: getContextClient(),
@@ -23,13 +24,18 @@
         },
         pause: true
     })
-    
-    onMount(() => {
-        subtagsQuery.resume()
-    })
+
+    if (tag) {
+        onMount(() => {
+            subtagsQuery.resume()
+        })
+    }
 </script>
 
-{#if tag}
+{#if tag.length === 0}
+    <h2>Tag "<code>{$page.params.tag}</code>" not found</h2>
+    <a href="/">Go Back</a>
+{:else}
     <h1>Tag: <code>{tag.name}</code></h1>
     {#if tag.parentTags.length > 0}
     <h2>Parent Tags</h2>
@@ -56,10 +62,7 @@
             <li><a href="/wiki/{article.title}">{formatTitle(article.title)}</a></li>
         {/each}
     </ul>
-    {/if}
-{:else}
-    <h2>Tag "<code>{$page.params.tag}</code>" Not Found</h2>
-    <a href="/">Go Back</a>
+    {/if}   
 {/if}
 
 <style>

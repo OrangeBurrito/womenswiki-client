@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { PageProps } from './$types'
+	import type { PageProps, PageServerData } from './$types'
 	import { remark, rehype } from '$lib/markdown/plugin'
 	import { anchor } from '@cartamd/plugin-anchor'
 	import { formatTitle } from '$lib/util'
@@ -7,10 +7,13 @@
 	import DOMPurify from 'isomorphic-dompurify'
 	import { Carta, Markdown } from 'carta-md'
 
+	interface Props {
+		data: PageServerData
+	}
 
-	let { data }: PageProps = $props()
+	let { data }: Props = $props()
 
-	const article = data.result
+	const { article } = data
 
 	const carta = new Carta({
 		extensions: [anchor(), remark(), rehype()],
@@ -18,25 +21,25 @@
 	})
 </script>
 
-{#if !article}
+{#if article.length === 0}
 	<h2>No article found</h2>
 	<a href="/">Go Back</a>
 {:else}
-<article data-sveltekit-reload>
-	<div class="wrap">
-		<div class="heading">
-			<h1 class="article-title">{formatTitle(article.title)}</h1>
-			{#if article.updatedAt}
-				<em class="last-updated">Last updated: {article.updatedAt}</em>
-			{/if}
-			<div class="tags">
-				{#each article.tags as tag}
-					<Tag name={tag.name} color={tag.color.value} />
-				{/each}
-			</div>
-	</div>
-	<Markdown {carta} value={article.content} />
-</article>
+	<article data-sveltekit-reload>
+		<div class="wrap">
+			<div class="heading">
+				<h1 class="article-title">{formatTitle(article.title)}</h1>
+				{#if article.updatedAt}
+					<em class="last-updated">Last updated: {article.updatedAt}</em>
+				{/if}
+				<div class="tags">
+					{#each article.tags as tag}
+						<Tag name={tag.name} color={tag.color.value} />
+					{/each}
+				</div>
+		</div>
+		<Markdown {carta} value={article.content} />
+	</article>
 {/if}
 
 <style>

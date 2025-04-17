@@ -1,35 +1,48 @@
 <script lang="ts">
+	import type { LayoutServerData } from './$types'
     import { setContextClient } from '@urql/svelte'
     import { client } from '$lib/graphql/client'
-	import type { LayoutServerData } from './$types'
     import '$lib/styles/global.css'
+	import { onMount, type Snippet } from 'svelte'
 
-    export let data: LayoutServerData
+    interface Props {
+        data: LayoutServerData
+        children: Snippet
+    }
+
+    let { data, children }: Props = $props()
 
     setContextClient(client)
+
+    onMount(() => {
+        if (data?.googleAnalytics) {
+            const script = document.getElementById('gscript') as HTMLScriptElement
+            script!.src += data.googleAnalytics
+        }
+    })
 </script>
 
 <svelte:head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id={data?.google_analytics}"></script>
+    <script id="gscript" async src="https://www.googletagmanager.com/gtag/js?id="></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      
-      gtag('config', data?.google_analytics);
       </script>
 </svelte:head>
+
 <header>
     <div class="inner">
         <h3 id="page-title"><a href="/">WomensWiki</a></h3>
-        <!-- <SearchBar/> -->
     </div>
 </header>
 <main>
-    <slot/>
+    {@render children()}
 </main>
 <footer>
-    <p>Copyright © OrangeBurrito 2024</p>
+    <div class="inner">
+        <p>Copyright © OrangeBurrito 2024</p>
+    </div>
 </footer>
 
 <style>
@@ -37,7 +50,7 @@
         background: var(--color-primary-light);
     }
     
-    header .inner, footer .inner {
+    header .inner {
         max-width: 85ch;
         display: flex;
         align-items: center;
@@ -47,12 +60,16 @@
     }
 
     footer {
-        padding: 0.75rem 1rem;
         text-align: center;
+        font-style: italic;
+        font-size: 14px;
+        padding: 0.5rem 1rem;
     }
 
     #page-title a {
+        font-family: var(--font-serif);
         font-weight: bold;
+        color: var(--color-primary-dark);
         border-bottom: none;
     }
     

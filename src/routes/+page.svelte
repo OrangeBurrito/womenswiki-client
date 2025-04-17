@@ -8,16 +8,15 @@
 
 	let { data }: PageProps = $props()
 
-	console.log(data)
-
 	let { articles, tags } = data
 </script>
+
 
 <section class="center">
 	<div class="text">
 		<h2>WomensWiki</h2>
 		<em>The Radical Feminist Wiki<br>exclusively for, and by women</em>
-		<p><strong>{articles ? articles.length : '??'}</strong> articles and counting</p>
+		<p><strong>{articles.length > 0 ? articles.length : '???'}</strong> articles and counting</p>
 	</div>
 	<img src="/images/underconstruction.png" alt="Under Construction">
 </section>
