@@ -12,70 +12,45 @@
     import Errors from '$lib/components/Errors.svelte'
     import Overlay from '$lib/components/Overlay.svelte'
     import 'carta-md/default.css'
+	import type { ActionData, PageServerData } from './$types'
+	import { enhance } from '$app/forms'
+	import { page } from '$app/state'
 
-    const defaultContent = "{{ infobox\n| title = Article \n| image = https://images.com/image.png \n| caption = Image Caption \n| extravalue = More metadata \n}}\n\nLorem ipsum dolor sit amet consectetur adipisicing elit. Tempora quam at, iste animi pariatur, fugit quod cupiditate, suscipit magnam totam aspernatur assumenda ipsum nihil laboriosam. Modi, ut. Nesciunt, ea temporibus.\n\nLorem ipsum dolor sit amet consectetur adipisicing elit. Nihil voluptatum ea corporis itaque architecto veritatis sed ipsum? Quas placeat vel dolor explicabo velit quia quos.\n\nThe below header is required to generate an optional Table of Contents\n## Contents\n\n## First Header\nSome content\n\nSome content that has a citation below[^1]\n\n## Second Header\n![A brief caption of an image](https://upload.wikimedia.org/wikipedia/commons/a/a7/Caspar_David_Friedrich%27s_Chalk_Cliffs_on_R%C3%BCgen.jpg)\n\nimages should be placed right below headers\n\nSome other content that also has a citation[^2]\n\n[^1]:[URL to source](https://thesource.com)\n[^2]:Citation that does not contain a link, bad practice"
-
-    beforeNavigate(({cancel}) => {
-    if (articleInput.content !== defaultContent || !creatingArticle) {
-            if (!confirm('You have unsaved changes. Are you sure you want to leave?')) {
-                cancel()
-            }
-        }
-    })
-
-    const client = getContextClient()
-
-    const tags = queryStore<TagsQuery, TagsQueryVariables>({
-        client,
-        query: TAGS,
-        variables: {
-            input: {
-                limit: 20
-            }
-        }
-    })
-    
-    const createArticleMutation = (input: any) => {
-        return mutationStore<CreateArticleMutation, CreateArticleMutationVariables>({
-            client,
-            query: CREATE_ARTICLE,
-            variables: {
-                input
-            }
-        })
+    interface Props {
+        data: PageServerData
     }
 
-    let articleInput = $state({
-        author: "orangeburrito",
-        title: "New Article",
-        content: defaultContent,
-        tags: []
-    })
-    let errors = $state([])
-    let result = $state(null)
+    let { data }: Props = $props()
+
+    const defaultContent = "{{ infobox\n| title = Article \n| image = https://images.com/image.png \n| caption = Image Caption \n| extravalue = More metadata \n}}\n\nLorem ipsum dolor sit amet consectetur adipisicing elit. Tempora quam at, iste animi pariatur, fugit quod cupiditate, suscipit magnam totam aspernatur assumenda ipsum nihil laboriosam. Modi, ut. Nesciunt, ea temporibus.\n\nLorem ipsum dolor sit amet consectetur adipisicing elit. Nihil voluptatum ea corporis itaque architecto veritatis sed ipsum? Quas placeat vel dolor explicabo velit quia quos.\n\nThe below header is required to generate an optional Table of Contents\n## Contents\n\n## First Header\nSome content\n\nSome content that has a citation below[^1]\n\n## Second Header\n![A brief caption of an image](https://upload.wikimedia.org/wikipedia/commons/a/a7/Caspar_David_Friedrich%27s_Chalk_Cliffs_on_R%C3%BCgen.jpg)\n\nimages should be placed right below headers\n\nSome other content that also has a citation[^2]\n\n[^1]:[URL to source](https://thesource.com)\n[^2]:Citation that does not contain a link, bad practice"
+    
+    let createForm: HTMLFormElement
+    let articleTitle = $state('')
+    let articleContent = $state(defaultContent)
     let creatingArticle = $state(false)
+    let errors = $state([])
 
     function createArticle() {
         creatingArticle = true
-        const infoboxTitle = /\|\s*title\s*=\s*(.*)/gm.exec(articleInput.content)
+        errors = []
+        const infoboxTitle = /\|\s*title\s*=\s*(.*)/gm.exec(articleContent)
 
-        if (infoboxTitle != null && (infoboxTitle[1].trim() != articleInput.title.trim())) {
+        if (infoboxTitle != null && (infoboxTitle[1].trim() != articleTitle.trim())) {
             errors = [{code: "Title", message: "Infobox title must match the article title"}]
             creatingArticle = false
             return
         }
 
-        createArticleMutation(articleInput).subscribe((res) => {
-            if (res.fetching === false) {
-                result = res.data.createArticle
-                errors = result.errors
-                
-                if (errors == null) {
-                    goto(`/wiki/${result.data.slug}`)
-                }
-                creatingArticle = false
+        createForm.requestSubmit()
+
+        if (page.form) {
+            if (page.form.errors) {
+                errors = page.form.errors
+            } else {
+                goto(`/wiki/${page.form.data.article.title}`)
             }
-        })
+        }
+        creatingArticle = false
     }
 
     const carta = new Carta({
@@ -87,35 +62,45 @@
 <Overlay show={creatingArticle}><h2>Creating Article...</h2></Overlay>
 <div class="create-article">
     <h2>Create New Article</h2>
-    <div class="inputs">
-        <label for="article-title">
-            <span>Title</span>
-            <input type="text" id="article-title" bind:value={articleInput.title}>
-        </label>
-        <label for="article-tags">
-            <div>Tags</div>
-            {#if $tags.fetching}
-                <Loading inline />
-            {:else}
-            <select id="tags" multiple bind:value={articleInput.tags} >
-            {#each $tags.data.tags.data as tag}
-                        <option value={tag.name}>{tag.name}</option>
-                    {/each}
-            </select>
-                {/if}
-        </label>
-    </div>
-    {#if result}
+    <form method="POST" bind:this={createForm} use:enhance={(data) => data.formData.append('content', articleContent)} >
+        <div class="inputs">
+            <label for="title">
+                <span>Title</span>
+                <input type="text" id="title" name="title" bind:value={articleTitle}>
+            </label>
+            <label for="tags">
+                <div>Tags</div>
+                {#if data.tags}
+                <select id="tags" name="tags" multiple >
+                {#each data.tags as tag}
+                            <option value={tag.name}>{tag.name}</option>
+                        {/each}
+                </select>
+                    {/if}
+            </label>
+            <input hidden type="text" name="author" value='orangeburrito' />
+        </div>
+    </form>
+    <MarkdownEditor {carta} mode="tabs" bind:value={articleContent} />
+    <!-- <button onclick={createArticle}>Create Article</button> -->
+    {#if errors.length > 0}
         <Errors {errors} />
     {/if}
-
-    <MarkdownEditor {carta} mode="tabs" bind:value={articleInput.content} />
-    <button disabled>Create Article</button>
-    <!-- <button on:click={createArticle}>Create Article</button> -->
 </div>
 
 <style>
     :global(main) {
         width: 100%;
+    }
+
+    .create-article {
+        position: relative;
+    }
+
+    :global(.create-article .errors) {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 60%;
     }
 </style>

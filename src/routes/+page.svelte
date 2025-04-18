@@ -101,6 +101,10 @@
 		gap: 6px;
 	}
 
+	.tags {
+		z-index: 2;
+	}
+
 	.latest-articles {
 		overflow-y: auto;
 	}

@@ -1,0 +1,13 @@
+mutation createArticle($input: CreateArticleCommandInput!) {
+    createArticle(input: $input) {
+        data {
+            createdAt
+            title
+            content
+        }
+        errors {
+            code
+            message
+        }
+    }
+}

@@ -17,11 +17,13 @@
 
 <style>
     .category-box {
+        position: relative;
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 0.75rem 1rem;
-        border: 2px solid var(--color-primary-light); 
+        border: 2px solid var(--color-primary-light);
+
 
         &:hover {
             color: var(--color-primary-dark);
@@ -37,9 +39,11 @@
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
+            width: 100%;
+            height: 100%;
             z-index: 1;
+            cursor: pointer;
+            border: none;
         }
     }
 
