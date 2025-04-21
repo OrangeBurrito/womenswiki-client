@@ -1,18 +1,13 @@
 <script lang="ts">
-	import { beforeNavigate, goto } from '$app/navigation'
-    import type { CreateArticleMutation, CreateArticleMutationVariables, TagsQuery, TagsQueryVariables } from '$lib/graphql/types'
-	import { getContextClient, queryStore, mutationStore } from '@urql/svelte'
-    import { TAGS } from '$lib/graphql/operations/query'
-	import { CREATE_ARTICLE } from '$lib/graphql/operations/mutation'
+	import { goto } from '$app/navigation'
     import { Carta, MarkdownEditor } from 'carta-md'
     import { anchor } from '@cartamd/plugin-anchor'
 	import { rehype, remark } from '$lib/markdown/plugin'
     import DOMPurify from 'isomorphic-dompurify'
-	import Loading from '$lib/components/Loading.svelte'
     import Errors from '$lib/components/Errors.svelte'
     import Overlay from '$lib/components/Overlay.svelte'
     import 'carta-md/default.css'
-	import type { ActionData, PageServerData } from './$types'
+	import type { PageServerData } from './$types'
 	import { enhance } from '$app/forms'
 	import { page } from '$app/state'
 
@@ -33,13 +28,13 @@
     function createArticle() {
         creatingArticle = true
         errors = []
-        const infoboxTitle = /\|\s*title\s*=\s*(.*)/gm.exec(articleContent)
+        // const infoboxTitle = /\|\s*title\s*=\s*(.*)/gm.exec(articleContent)
 
-        if (infoboxTitle != null && (infoboxTitle[1].trim() != articleTitle.trim())) {
-            errors = [{code: "Title", message: "Infobox title must match the article title"}]
-            creatingArticle = false
-            return
-        }
+        // if (infoboxTitle != null && (infoboxTitle[1].trim() != articleTitle.trim())) {
+        //     errors = [{code: "Title", message: "Infobox title must match the article title"}]
+        //     creatingArticle = false
+        //     return
+        // }
 
         createForm.requestSubmit()
 
@@ -83,6 +78,7 @@
     </form>
     <MarkdownEditor {carta} mode="tabs" bind:value={articleContent} />
     <!-- <button onclick={createArticle}>Create Article</button> -->
+    <button disabled>Create Article</button>
     {#if errors.length > 0}
         <Errors {errors} />
     {/if}

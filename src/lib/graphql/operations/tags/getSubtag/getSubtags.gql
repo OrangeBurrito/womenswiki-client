@@ -1,0 +1,13 @@
+query subtags($input: GetSubtagsRequestInput!) {
+  subtags(input: $input) {
+    data {
+      id
+      createdAt
+      name
+    }
+    errors {
+      code
+      message
+    }
+  }
+}

@@ -29,14 +29,14 @@
 		<div class="wrap">
 			<div class="heading">
 				<h1 class="article-title">{formatTitle(article.title)}</h1>
-				{#if article.updatedAt}
-					<em class="last-updated">Last updated: {article.updatedAt}</em>
-				{/if}
 				<div class="tags">
 					{#each article.tags as tag}
-						<Tag name={tag.name} color={tag.color.value} />
+					<Tag name={tag.name} color={tag.color.value} />
 					{/each}
 				</div>
+				{#if article.updatedAt}
+					<em class="last-updated">Last updated: {new Date(article.updatedAt).toLocaleDateString('en-GB')}</em>
+				{/if}
 		</div>
 		<Markdown {carta} value={article.content} />
 	</article>
@@ -46,6 +46,10 @@
 	article {
 		display: flex;
 		justify-content: center;
+	}
+
+	.heading {
+		margin-bottom: 1rem;
 	}
 
 	.article-title {
@@ -60,6 +64,7 @@
 		display: block;
 		margin-top: -0.5rem;
 		margin-bottom: 0.5rem;
+		color: var(--color-border);
 	}
 
 	.tags {

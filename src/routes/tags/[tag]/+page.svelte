@@ -1,35 +1,12 @@
 <script lang="ts">
 	import type { PageServerData } from "./$types"
-	import { SUBTAGS } from "$lib/graphql/operations/query"
-	import { getContextClient, queryStore } from "@urql/svelte"
-	import { onMount } from "svelte"
 	import Tag from "$lib/components/Tag.svelte"
 	import { page } from "$app/stores"
 	import { formatTitle } from "$lib/util"
 
     export let data: PageServerData
 
-    let { tag } = data
-    
-    const subtagsQuery = queryStore({
-        client: getContextClient(),
-        query: SUBTAGS,
-        variables: {
-            input: {
-                tag: tag?.name,
-                descending: false,
-                limit: 10,
-                offset: 0
-            }
-        },
-        pause: true
-    })
-
-    if (tag) {
-        onMount(() => {
-            subtagsQuery.resume()
-        })
-    }
+    let { tag, subtags } = data
 </script>
 
 {#if tag.length === 0}
@@ -45,11 +22,11 @@
         {/each}
      </ul>
     {/if}
-    {#if !$subtagsQuery.fetching && $subtagsQuery.data?.subtags.data.length > 0}
+    {#if subtags}
         <h2>Subtags</h2>
-        <em class="subtitle">This tag has {$subtagsQuery.data.subtags.data.length} subtags</em>
+        <em class="subtitle">This tag has {subtags.length} subtags</em>
         <ul>
-            {#each $subtagsQuery.data.subtags.data as subtag}
+            {#each subtags as subtag}
                 <li><Tag name={subtag.name} color={subtag.color.value} /></li>
             {/each}
         </ul>

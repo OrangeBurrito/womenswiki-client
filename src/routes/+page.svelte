@@ -3,7 +3,6 @@
 	import List from '$lib/components/List.svelte'
 	import Tag from '$lib/components/Tag.svelte'
 	import CategoryBox from '$lib/components/CategoryBox.svelte'
-	import Loading from '$lib/components/Loading.svelte'
 	import { formatTitle } from '$lib/util'
 
 	let { data }: PageProps = $props()
@@ -39,8 +38,8 @@
 			<CategoryBox href="/wiki/media_literature" disabled>
 				<h3>Feminist Media & Literature</h3>
 			</CategoryBox>
-			<CategoryBox href="/other_resources" disabled>
-				<h3>Other Websites & Resources</h3>
+			<CategoryBox href="/wiki/online_communities">
+				<h3>Online Communities</h3>
 			</CategoryBox>
 		</List>
 		<h2>Tags</h2>

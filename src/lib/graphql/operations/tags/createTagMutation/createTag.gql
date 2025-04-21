@@ -1,0 +1,13 @@
+mutation createTag($input: CreateTagCommandInput!) {
+  createTag(input: $input) {
+    data {
+      id
+      createdAt
+      name
+    }
+    errors {
+      code
+      message
+    }
+  }
+}
