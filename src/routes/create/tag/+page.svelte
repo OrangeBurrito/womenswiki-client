@@ -1,33 +1,10 @@
 <script lang="ts">
     import Overlay from '$lib/components/Overlay.svelte'
     import Errors from '$lib/components/Errors.svelte'
-	import { TAGS } from '$lib/graphql/operations/query'
-    import { CREATE_TAG } from '$lib/graphql/operations/mutation'
     import { debounce } from '$lib/util'
     import { getContextClient, mutationStore, queryStore } from '@urql/svelte'
 	import { goto } from '$app/navigation'
 	import type { CreateTagMutation, CreateTagMutationVariables, TagsQuery, TagsQueryVariables } from '$lib/graphql/types'
-
-    const client = getContextClient()
-
-    const tagsQuery = queryStore<TagsQuery, TagsQueryVariables>({
-        client,
-        query: TAGS,
-        variables: {
-            input: {
-                limit: 20
-            }
-        }
-    })
-    const createTagMutation = (input: any) => {
-        return mutationStore<CreateTagMutation, CreateTagMutationVariables>({
-            client,
-            query: CREATE_TAG,
-            variables: {
-                input
-            }
-        })
-    }
 
     let searchQuery = $state('')
     let filteredTags = $state([])
@@ -40,29 +17,29 @@
     let creatingTag = $state(false)
 
     function search() {
-        filteredTags = $tagsQuery.data?.tags?.data?.filter((tag: any) => {
-            return tag.name.toLowerCase().includes(searchQuery.toLowerCase())
-        })
+        // filteredTags = $tagsQuery.data?.tags?.data?.filter((tag: any) => {
+        //     return tag.name.toLowerCase().includes(searchQuery.toLowerCase())
+        // })
     }
 
-    function createTag() {
-        creatingTag = true
-        createTagMutation(tagInput).subscribe((res) => {
-            if (res.fetching === false) {
-                errors = res.data.createTag.errors
+    // function createTag() {
+    //     creatingTag = true
+    //     createTagMutation(tagInput).subscribe((res) => {
+    //         if (res.fetching === false) {
+    //             errors = res.data.createTag.errors
                 
-                if (errors == null) {
-                    goto(`/tags/${res.data.createTag.data.name}`)
-                }
-                creatingTag = false
-            }
-        })
-    }
+    //             if (errors == null) {
+    //                 goto(`/tags/${res.data.createTag.data.name}`)
+    //             }
+    //             creatingTag = false
+    //         }
+    //     })
+    // }
 </script>
 
 
 <h2>Create Tag</h2>
-<Overlay show={creatingTag}><h2>Creating Tag...</h2></Overlay>
+<!-- <Overlay show={creatingTag}><h2>Creating Tag...</h2></Overlay>
 
 {#if errors.length > 0}
     <Errors {errors} />
@@ -83,5 +60,5 @@
         <input type="text" id="tag-name" bind:value={tagInput.name}>
     </label>
 </div>
-<button disabled>Create Tag</button>
+<button disabled>Create Tag</button> -->
 <!-- <button onclick={createTag}>Create Tag</button> -->
