@@ -16,20 +16,21 @@
 
     onMount(() => {
         if (data?.googleAnalytics) {
-            const script = document.getElementById('gscript') as HTMLScriptElement
-            script!.src += data.googleAnalytics
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = `https://www.googletagmanager.com/gtag/js?id=${data.googleAnalytics}`
+            script.innerHTML = `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+
+                gtag('config', '${data.googleAnalytics}');
+            `
+            document.head.appendChild(script);
         }
     })
 </script>
 
-<svelte:head>
-    <script id="gscript" async src="https://www.googletagmanager.com/gtag/js?id="></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      </script>
-</svelte:head>
 
 <header>
     <div class="inner">
