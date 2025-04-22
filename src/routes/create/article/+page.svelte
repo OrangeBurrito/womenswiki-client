@@ -10,6 +10,7 @@
 	import type { PageServerData } from './$types'
 	import { enhance } from '$app/forms'
 	import { page } from '$app/state'
+	import { onMount } from 'svelte'
 
     interface Props {
         data: PageServerData
@@ -17,7 +18,7 @@
 
     let { data }: Props = $props()
 
-    const defaultContent = "{{ infobox\n| title = Article \n| image = https://images.com/image.png \n| caption = Image Caption \n| extravalue = More metadata \n}}\n\nLorem ipsum dolor sit amet consectetur adipisicing elit. Tempora quam at, iste animi pariatur, fugit quod cupiditate, suscipit magnam totam aspernatur assumenda ipsum nihil laboriosam. Modi, ut. Nesciunt, ea temporibus.\n\nLorem ipsum dolor sit amet consectetur adipisicing elit. Nihil voluptatum ea corporis itaque architecto veritatis sed ipsum? Quas placeat vel dolor explicabo velit quia quos.\n\nThe below header is required to generate an optional Table of Contents\n## Contents\n\n## First Header\nSome content\n\nSome content that has a citation below[^1]\n\n## Second Header\n![A brief caption of an image](https://upload.wikimedia.org/wikipedia/commons/a/a7/Caspar_David_Friedrich%27s_Chalk_Cliffs_on_R%C3%BCgen.jpg)\n\nimages should be placed right below headers\n\nSome other content that also has a citation[^2]\n\n[^1]:[URL to source](https://thesource.com)\n[^2]:Citation that does not contain a link, bad practice"
+    const defaultContent = "{{ infobox\n| title = Article \n| image = https://images.com/image.png \n| caption = Image Caption \n| extravalue = More metadata \n}}\n\nLorem ipsum dolor sit amet consectetur adipisicing elit. Tempora quam at, iste animi pariatur, fugit quod cupiditate, suscipit magnam totam aspernatur assumenda ipsum nihil laboriosam. Modi, ut. Nesciunt, ea temporibus.\n\nLorem ipsum dolor sit amet consectetur adipisicing elit. Nihil voluptatum ea corporis itaque architecto veritatis sed ipsum? Quas placeat vel dolor explicabo velit quia quos.\n\n## First Header\nSome content\n\nSome content that has a citation below[^1]\n\n## Second Header\n![A brief caption of an image](https://upload.wikimedia.org/wikipedia/commons/a/a7/Caspar_David_Friedrich%27s_Chalk_Cliffs_on_R%C3%BCgen.jpg)\n\nimages should be placed right below headers\n\nSome other content that also has a citation[^2]\n\n[^1]:[URL to source](https://thesource.com)\n[^2]:Citation that does not contain a link, bad practice"
     
     let createForm: HTMLFormElement
     let articleTitle = $state('')
@@ -28,13 +29,13 @@
     function createArticle() {
         creatingArticle = true
         errors = []
-        // const infoboxTitle = /\|\s*title\s*=\s*(.*)/gm.exec(articleContent)
+        const infoboxTitle = /\|\s*title\s*=\s*(.*)/gm.exec(articleContent)
 
-        // if (infoboxTitle != null && (infoboxTitle[1].trim() != articleTitle.trim())) {
-        //     errors = [{code: "Title", message: "Infobox title must match the article title"}]
-        //     creatingArticle = false
-        //     return
-        // }
+        if (infoboxTitle != null && (infoboxTitle[1].trim() != articleTitle.trim())) {
+            errors = [{code: "Title", message: "Infobox title must match the article title"}]
+            creatingArticle = false
+            return
+        }
 
         createForm.requestSubmit()
 

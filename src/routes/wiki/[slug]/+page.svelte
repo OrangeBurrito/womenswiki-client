@@ -6,6 +6,10 @@
 	import Tag from '$lib/components/Tag.svelte'
 	import DOMPurify from 'isomorphic-dompurify'
 	import { Carta, Markdown } from 'carta-md'
+	import { onDestroy, onMount } from 'svelte'
+	import { browser } from '$app/environment'
+	import { afterNavigate } from '$app/navigation'
+	import { page } from '$app/state'
 
 	interface Props {
 		data: PageServerData
@@ -18,6 +22,31 @@
 	const carta = new Carta({
 		extensions: [anchor(), remark(), rehype()],
 		sanitizer: DOMPurify.sanitize
+	})
+
+	onMount(() => {
+		const articleBody = document.querySelector('.markdown-body')!
+		const tocHeadings = Array.from(articleBody.querySelectorAll('h2'))
+
+		const scrollHandler = (entries: IntersectionObserverEntry[]) => {``
+			entries.forEach((e: IntersectionObserverEntry) => {
+				const heading = e.target as HTMLElement
+				const id = heading.id
+				const headingLink = document.querySelector(`a[href="#${id}"]`)
+
+				if (e.intersectionRatio > 0) {
+					headingLink?.classList.add('active')
+				} else {
+					headingLink?.classList.remove('active')
+				}
+			})
+		}
+		
+		const observer = new IntersectionObserver(scrollHandler)
+		
+		tocHeadings.forEach(heading => {
+			observer.observe(heading)
+		})
 	})
 </script>
 
@@ -38,7 +67,7 @@
 					<em class="last-updated">Last updated: {new Date(article.updatedAt).toLocaleDateString('en-GB')}</em>
 				{/if}
 		</div>
-		<Markdown {carta} value={article.content} />
+		<Markdown {carta} value={`## remarktableofcontents \n${article.content}`} />
 	</article>
 {/if}
 
@@ -57,7 +86,7 @@
 	}
 
 	article .wrap {
-    	max-width: 80ch;
+    	max-width: clamp(50ch, 60vw, 70ch);
 	}
 
 	.last-updated {

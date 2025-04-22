@@ -12,7 +12,7 @@ const remarkTransformer: UnifiedTransformer<'sync'> = {
     type: 'remark',
     transform: ({processor}) => {
         processor
-        .use(remarkToc)
+        .use(remarkToc, { heading: 'remarktableofcontents'})
         .use(remarkCite)
         .use(remarkInfobox)
         .use(wikiLinkPlugin, { hrefTemplate: (permalink: string) => `/wiki/${permalink}` })
