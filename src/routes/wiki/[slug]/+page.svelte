@@ -1,15 +1,12 @@
 <script lang="ts">
-	import type { PageProps, PageServerData } from './$types'
+	import type { PageServerData } from './$types'
+	import { onMount } from 'svelte'
 	import { remark, rehype } from '$lib/markdown/plugin'
 	import { anchor } from '@cartamd/plugin-anchor'
 	import { formatTitle } from '$lib/util'
-	import Tag from '$lib/components/Tag.svelte'
-	import DOMPurify from 'isomorphic-dompurify'
 	import { Carta, Markdown } from 'carta-md'
-	import { onDestroy, onMount } from 'svelte'
-	import { browser } from '$app/environment'
-	import { afterNavigate } from '$app/navigation'
-	import { page } from '$app/state'
+	import DOMPurify from 'isomorphic-dompurify'
+	import Tag from '$lib/components/Tag.svelte'
 
 	interface Props {
 		data: PageServerData
@@ -28,7 +25,7 @@
 		const articleBody = document.querySelector('.markdown-body')!
 		const tocHeadings = Array.from(articleBody.querySelectorAll('h2'))
 
-		const scrollHandler = (entries: IntersectionObserverEntry[]) => {``
+		const scrollHandler = (entries: IntersectionObserverEntry[]) => {
 			entries.forEach((e: IntersectionObserverEntry) => {
 				const heading = e.target as HTMLElement
 				const id = heading.id
@@ -50,6 +47,10 @@
 	})
 </script>
 
+<svelte:head>
+	<title>{article.length === 0 ? 'No article found - WomensWiki' : `${formatTitle(article.title)} - WomensWiki`}</title>
+</svelte:head>
+
 {#if article.length === 0}
 	<h2>No article found</h2>
 	<a href="/">Go Back</a>
@@ -67,7 +68,7 @@
 					<em class="last-updated">Last updated: {new Date(article.updatedAt).toLocaleDateString('en-GB')}</em>
 				{/if}
 		</div>
-		<Markdown {carta} value={`## remarktableofcontents \n${article.content}`} />
+		<Markdown {carta} value={`\n## remarktoc\n## (Top)\n${article.content}`} />
 	</article>
 {/if}
 

@@ -42,10 +42,6 @@ body.modal-open {
 	overflow: hidden;
 }
 
-p {
-	line-height: 1.6;
-}
-
 h1 {
 	font-size: 32px;
 }
@@ -70,9 +66,13 @@ code {
 
 a,
 a:visited {
-	text-decoration: none;
-	border-bottom: 2.5px solid var(--color-primary);
 	color: inherit;
+	text-decoration: none;
+	
+	&:hover {
+		text-decoration: underline var(--color-primary) 2px;
+		text-underline-offset: 4px;
+	}
 }
 
 button:disabled {
@@ -97,6 +97,10 @@ main h2 {
 ul,
 ol {
 	margin-bottom: 1rem;
+}
+
+li ul {
+	margin-bottom: 0;
 }
 
 .inputs {
@@ -168,11 +172,11 @@ label span {
 	}
 
 	a {
-		border-bottom: none;
+		text-decoration: none;
 		color: var(--color-primary);
 		&:hover {
 			font-weight: normal;
-			border-bottom: var(--color-primary) 2px solid;
+			text-decoration: underline var(--color-primary) 2px;
 		}
 	}
 
@@ -209,11 +213,16 @@ label span {
 		margin-bottom: 1rem;
 	}
 
-	h2#remarktableofcontents {
+	h2#remarktoc {
 		display: none;
 	}
 
-	h2#remarktableofcontents + ul {
+	h2#top {
+		opacity: 0;
+		height: 0;
+	}
+
+	h2#remarktoc + ul {
 		--toc-height: 80px;
 		position: sticky;
 		top: 1.5rem;
@@ -221,14 +230,16 @@ label span {
 		width: 200px;
 		height: var(--toc-height);
 		margin: calc(var(--toc-height) * -1) 0 0 -24vw;
-		padding: 0;
+		padding-left: 1rem;
 		list-style-type: none;
 
 		&:before {
 			content: 'Contents';
+			display: block;;
 			font-weight: 600;
 			font-family: var(--font-serif);
-			font-size: 18px;
+			font-size: 20px;
+			padding-bottom: 4px;
 		}
 		li a {
 			display: inline-block;
@@ -273,7 +284,13 @@ label span {
 }
 
 @media (max-width: 770px) {
-	h2#remarktableofcontents + ul {
+	h2#remarktoc + ul {
 		display: none;
+	}
+}
+
+@media (max-width: 1000px) {
+.markdown-body h2#remarktoc + ul {
+		padding-left: 0;
 	}
 }

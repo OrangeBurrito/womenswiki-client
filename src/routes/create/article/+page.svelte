@@ -10,7 +10,6 @@
 	import type { PageServerData } from './$types'
 	import { enhance } from '$app/forms'
 	import { page } from '$app/state'
-	import { onMount } from 'svelte'
 
     interface Props {
         data: PageServerData

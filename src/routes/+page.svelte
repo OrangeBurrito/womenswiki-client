@@ -14,7 +14,7 @@
 <section class="center">
 	<div class="text">
 		<h2>WomensWiki</h2>
-		<em>The Radical Feminist Wiki<br>exclusively for, and by women</em>
+		<em>The Radical Feminist Wiki<br>exclusively by and for women</em>
 		<p><strong>{articles.length > 0 ? articles.length : '???'}</strong> articles and counting</p>
 	</div>
 	<img src="/images/underconstruction.png" alt="Under Construction">
@@ -83,9 +83,16 @@
 		max-width: 180px;
 	}
 
-	.text h2 {
-		color: var(--color-primary);
-		margin-bottom: 0;
+	.text { 
+		h2 {
+			color: var(--color-primary);
+			margin-bottom: 0;
+		}
+
+		p, em {
+			font-family: var(--font-serif);
+			line-height: 1.4;
+		}
 	}
 
 	.content {

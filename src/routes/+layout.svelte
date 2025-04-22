@@ -31,6 +31,9 @@
     })
 </script>
 
+<svelte:head>
+    <title>WomensWiki</title>
+</svelte:head>
 
 <header>
     <div class="inner">
@@ -52,7 +55,7 @@
     }
     
     header .inner {
-        max-width: 85ch;
+        max-width: 900px;
         display: flex;
         align-items: center;
         gap: 1rem;
@@ -71,7 +74,6 @@
         font-family: var(--font-serif);
         font-weight: bold;
         color: var(--color-primary-dark);
-        border-bottom: none;
     }
     
     main {
