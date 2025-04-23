@@ -228,7 +228,8 @@ label span {
 	pre {
 		border-radius: 8px;
 		overflow: hidden;
-
+		max-width: calc(100vw - 2rem);
+		
 		code {
 			font-size: 12px;
 			font-weight: 300;
@@ -280,7 +281,7 @@ label span {
 	}
 }
 
-@media (max-width: 550px) {
+@media (max-width: 536px) {
 	#infobox {
 		float: none;
 		width: calc(100% - 2rem);
@@ -289,23 +290,40 @@ label span {
 	#infobox th img {
 		margin: 0 auto;
 	}
-	.markdown-body figure {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		float: none;
-		margin-right: 0;
-		padding-left: 0;
+
+	.markdown-body {
+		p,
+		li,
+		a,
+		th#caption,
+		figcaption {
+			font-size: 16px;
+		}
+
+		pre {
+			white-space: pre-wrap;
+		}
+
+		figure {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			float: none;
+			margin-right: 0;
+			padding-left: 0;
+
+			img {
+				max-width: 100%;
+				max-height: 300px;
+			}
+		}
+		
+		figcaption {
+			max-width: 100%;
+		}
 	}
 
-	.markdown-body figure img {
-		max-width: 100%;
-		max-height: 300px;
-	}
 
-	.markdown-body figcaption {
-		max-width: 100%;
-	}
 }
 
 @media (max-width: 770px) {
