@@ -24,4 +24,8 @@
     .tag:hover {
         background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25));
     }
+
+    :global(.tag a, .tag a:hover) {
+        text-decoration: none;
+    }
 </style>

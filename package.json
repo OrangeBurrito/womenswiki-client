@@ -34,6 +34,7 @@
         "mdast-util-infobox": "^1.0.5",
         "prettier": "^3.5.3",
         "prettier-plugin-svelte": "^3.3.3",
+        "rehype-highlight": "^7.0.2",
         "remark-breaks": "^4.0.0",
         "remark-infobox": "^1.0.3",
         "remark-rehype": "^11.1.2",

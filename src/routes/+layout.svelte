@@ -1,9 +1,10 @@
 <script lang="ts">
+	import { onMount, type Snippet } from 'svelte'
 	import type { LayoutServerData } from './$types'
     import { setContextClient } from '@urql/svelte'
     import { client } from '$lib/graphql/client'
     import '$lib/styles/global.css'
-	import { onMount, type Snippet } from 'svelte'
+    import '$lib/styles/horizon.css'
 
     interface Props {
         data: LayoutServerData

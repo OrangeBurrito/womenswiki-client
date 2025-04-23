@@ -93,7 +93,6 @@
 	.last-updated {
 		display: block;
 		margin-top: -0.5rem;
-		margin-bottom: 0.5rem;
 		color: var(--color-border);
 	}
 

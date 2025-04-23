@@ -5,6 +5,7 @@ import remarkCite from '@benrbray/remark-cite'
 import remarkInfobox from 'remark-infobox'
 import { infoboxHastHandlers } from 'mdast-util-infobox';
 import rehypeFigure from "@microflash/rehype-figure";
+import rehypeHighlight from "rehype-highlight";
 import wikiLinkPlugin from 'remark-wiki-link'
 
 const remarkTransformer: UnifiedTransformer<'sync'> = {
@@ -29,6 +30,7 @@ const rehypeTransformer: UnifiedTransformer<'sync'> = {
     transform: ({processor}) => {
         processor
         .use(rehypeFigure)
+        .use(rehypeHighlight)
     }
 }
 

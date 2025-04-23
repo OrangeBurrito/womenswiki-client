@@ -14,8 +14,11 @@
 <section class="center">
 	<div class="text">
 		<h2>WomensWiki</h2>
-		<em>The Radical Feminist Wiki<br>exclusively by and for women</em>
-		<p><strong>{articles.length > 0 ? articles.length : '???'}</strong> articles and counting</p>
+		<p>The Radical Feminist Wiki<br>exclusively by and for women</p>
+		<div class="stats">
+			<span><a href="/statistics">{articles.length > 0 ? articles.length : '???'}</a> articles</span>
+			<span><a href="/statistics">{articles.length > 0 ? articles.length : '???'}</a> contributors</span>
+		</div>
 	</div>
 	<img src="/images/underconstruction.png" alt="Under Construction">
 </section>
@@ -89,9 +92,25 @@
 			margin-bottom: 0;
 		}
 
-		p, em {
+		p {
 			font-family: var(--font-serif);
-			line-height: 1.4;
+			font-style: italic;
+			font-size: 18px;
+			line-height: 1.2;
+			margin-bottom: 0.25rem;
+		}
+
+		.stats {
+			display: flex;
+
+			a {
+				color: var(--color-primary);
+			}
+
+			span:first-child::after {
+				content: '·';
+				margin: 0 0.25rem;
+			}
 		}
 	}
 

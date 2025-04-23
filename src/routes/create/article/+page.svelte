@@ -6,7 +6,6 @@
     import DOMPurify from 'isomorphic-dompurify'
     import Errors from '$lib/components/Errors.svelte'
     import Overlay from '$lib/components/Overlay.svelte'
-    import 'carta-md/default.css'
 	import type { PageServerData } from './$types'
 	import { enhance } from '$app/forms'
 	import { page } from '$app/state'
@@ -30,16 +29,16 @@
         errors = []
         const infoboxTitle = /\|\s*title\s*=\s*(.*)/gm.exec(articleContent)
 
-        if (infoboxTitle != null && (infoboxTitle[1].trim() != articleTitle.trim())) {
-            errors = [{code: "Title", message: "Infobox title must match the article title"}]
-            creatingArticle = false
-            return
-        }
+        // if (infoboxTitle != null && (infoboxTitle[1].trim() != articleTitle.trim())) {
+        //     errors = [{code: "Title", message: "Infobox title must match the article title"}]
+        //     creatingArticle = false
+        //     return
+        // }
 
         createForm.requestSubmit()
 
         if (page.form) {
-            if (page.form.errors) {
+            if (page.form.errors.length > 0) {
                 errors = page.form.errors
             } else {
                 goto(`/wiki/${page.form.data.article.title}`)
@@ -49,8 +48,8 @@
     }
 
     const carta = new Carta({
-        extensions: [anchor(), remark(), rehype()],
-        sanitizer: DOMPurify.sanitize
+        sanitizer: DOMPurify.sanitize,
+        extensions: [anchor(), remark(), rehype()]
     })
 </script>
 
@@ -76,7 +75,7 @@
             <input hidden type="text" name="author" value='orangeburrito' />
         </div>
     </form>
-    <MarkdownEditor {carta} mode="tabs" bind:value={articleContent} />
+    <MarkdownEditor {carta} mode="tabs" theme="horizon" bind:value={articleContent} />
     <!-- <button onclick={createArticle}>Create Article</button> -->
     <button disabled>Create Article</button>
     {#if errors.length > 0}
