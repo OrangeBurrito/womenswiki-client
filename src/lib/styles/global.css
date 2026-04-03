@@ -116,6 +116,18 @@ label span {
 	margin-right: 0.5rem;
 }
 
+.icon {
+	--icon-size: 16px;
+	width: var(--icon-size);
+	height: var(--icon-size);
+	
+	svg {
+		width: var(--icon-size);
+		height: var(--icon-size);
+		stroke: #000;
+	}
+}
+
 .carta-input {
 	line-height: normal;
 	font-size: 13px !important;

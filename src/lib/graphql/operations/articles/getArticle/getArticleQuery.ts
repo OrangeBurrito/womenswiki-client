@@ -7,5 +7,5 @@ export default async function getArticleQuery(title: string) {
         title: title
     })
 
-    return result.data?.articleByTitle.data ?? []
+    return result.data?.articleByTitle.data ?? null
 }

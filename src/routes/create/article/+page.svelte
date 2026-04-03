@@ -1,14 +1,12 @@
 <script lang="ts">
 	import { goto } from '$app/navigation'
-    import { Carta, MarkdownEditor } from 'carta-md'
-    import { anchor } from '@cartamd/plugin-anchor'
-	import { rehype, remark } from '$lib/markdown/plugin'
-    import DOMPurify from 'isomorphic-dompurify'
+    import { MarkdownEditor } from 'carta-md'
     import Errors from '$lib/components/Errors.svelte'
     import Overlay from '$lib/components/Overlay.svelte'
 	import type { PageServerData } from './$types'
 	import { enhance } from '$app/forms'
 	import { page } from '$app/state'
+	import { carta } from '$lib/markdown/plugin'
 
     interface Props {
         data: PageServerData
@@ -39,18 +37,13 @@
 
         if (page.form) {
             if (page.form.errors.length > 0) {
-                errors = page.form.errors
-            } else {
-                goto(`/wiki/${page.form.data.article.title}`)
+                    errors = page.form.errors
+                } else {
+                    setTimeout(() => goto(`/wiki/${page.form.data.article.title}`), 0);
             }
         }
         creatingArticle = false
     }
-
-    const carta = new Carta({
-        sanitizer: DOMPurify.sanitize,
-        extensions: [anchor(), remark(), rehype()]
-    })
 </script>
 
 <Overlay show={creatingArticle}><h2>Creating Article...</h2></Overlay>

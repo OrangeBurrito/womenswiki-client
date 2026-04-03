@@ -1,12 +1,10 @@
 <script lang="ts">
 	import type { PageServerData } from './$types'
 	import { onMount } from 'svelte'
-	import { remark, rehype } from '$lib/markdown/plugin'
-	import { anchor } from '@cartamd/plugin-anchor'
 	import { formatTitle } from '$lib/util'
-	import { Carta, Markdown } from 'carta-md'
-	import DOMPurify from 'isomorphic-dompurify'
+	import {  Markdown } from 'carta-md'
 	import Tag from '$lib/components/Tag.svelte'
+	import { carta } from '$lib/markdown/plugin'
 
 	interface Props {
 		data: PageServerData
@@ -15,11 +13,6 @@
 	let { data }: Props = $props()
 
 	const { article } = data
-
-	const carta = new Carta({
-		extensions: [anchor(), remark(), rehype()],
-		sanitizer: DOMPurify.sanitize
-	})
 
 	onMount(() => {
 		const articleBody = document.querySelector('.markdown-body')!

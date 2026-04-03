@@ -55,11 +55,26 @@
 /* Toolbar */
 .carta-theme__horizon .carta-toolbar {
 	padding: 0 12px;
-}
 
-.carta-theme__horizon .carta-toolbar-left {
-	display: flex;
-	align-items: flex-end;
+  .carta-toolbar-left {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .carta-icon[title="Heading"] { display: none; }
+  .carta-icon:has(.h2-icon) { order: 1; }
+  .carta-icon:has(.h3-icon) { order: 2; }
+  .carta-icon[title="Bold"] { order: 3; }
+  .carta-icon[title="Italic"] { order: 4; }
+  .carta-icon[title="Strikethrough"] { order: 5; }
+  .carta-icon[title="Link"] { order: 6; }
+  .carta-icon:has(.wikilink-icon) { order: 7; }
+  .carta-icon:has(.image-icon) { order: 8; }
+  .carta-icon[title="Bulleted list"] { order: 9; }
+  .carta-icon[title="Numbered list"] { order: 10; }
+  .carta-icon[title="Task list"] { order: 11; }
+  .carta-icon[title="Quote"] { order: 12; }
+  .carta-icon[title="Code"] { order: 13; }
 }
 
 /* .carta-theme__horizon button {

@@ -46,7 +46,7 @@
 </main>
 <footer>
     <div class="inner">
-        <p>Copyright © OrangeBurrito 2024</p>
+        <p>Copyright © OrangeBurrito 2026</p>
     </div>
 </footer>
 

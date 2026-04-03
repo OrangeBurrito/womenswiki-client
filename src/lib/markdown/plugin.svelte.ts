@@ -7,12 +7,12 @@ import { infoboxHastHandlers } from 'mdast-util-infobox';
 import rehypeFigure from "@microflash/rehype-figure";
 import rehypeHighlight from "rehype-highlight";
 import wikiLinkPlugin from 'remark-wiki-link'
-import { anchor } from '@cartamd/plugin-anchor'
-import DOMPurify from 'isomorphic-dompurify'
 import WikiLinkIcon from "$lib/components/icons/WikiLinkIcon.svelte"
 import H2Icon from "$lib/components/icons/H2Icon.svelte"
 import H3Icon from "$lib/components/icons/H3Icon.svelte"
 import ImageIcon from "$lib/components/icons/ImageIcon.svelte"
+import DOMPurify from 'isomorphic-dompurify'
+import { anchor } from "@cartamd/plugin-anchor"
 
 const remarkTransformer: UnifiedTransformer<'sync'> = {
     execution: 'sync',
@@ -40,9 +40,9 @@ const rehypeTransformer: UnifiedTransformer<'sync'> = {
     }
 }
 
-const remark = (): Plugin => ({transformers: [remarkTransformer]})
-const rehype = (): Plugin => ({transformers: [rehypeTransformer]})
-const cartaIcons = (): Plugin => ({
+export const remark = (): Plugin => ({transformers: [remarkTransformer]})
+export const rehype = (): Plugin => ({transformers: [rehypeTransformer]})
+export const cartaIcons = (): Plugin => ({
     icons: [
         {id: 'section', action: (input) => input.toggleLinePrefix('##'), component: H2Icon},
         {id: 'subsection', action: (input) => input.toggleLinePrefix('###'), component: H3Icon},

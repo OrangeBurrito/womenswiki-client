@@ -1,0 +1,13 @@
+mutation updateArticle($input: UpdateArticleCommandInput!) {
+    updateArticle(input: $input) {
+      data {
+        updatedAt
+        title
+        content
+      }
+      errors {
+          code
+          message
+        }
+    }
+  }
