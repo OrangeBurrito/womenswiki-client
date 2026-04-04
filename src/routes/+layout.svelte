@@ -46,7 +46,7 @@
 </main>
 <footer>
     <div class="inner">
-        <p>Copyright © OrangeBurrito 2026</p>
+        <p>Copyright © <a href="https://orangeburrito.com" target="_blank">OrangeBurrito</a> 2026</p>
     </div>
 </footer>
 

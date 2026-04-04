@@ -11,16 +11,19 @@
 </script>
 
 
-<section class="center">
-	<div class="text">
-		<h2>WomensWiki</h2>
-		<p>The Radical Feminist Wiki<br>exclusively by and for women</p>
-		<div class="stats">
-			<span><a href="/statistics">{articles.length > 0 ? articles.length : '???'}</a> articles</span>
-			<span><a href="/statistics">{articles.length > 0 ? articles.length : '???'}</a> contributors</span>
+<section class="header">
+	<div class="intro">
+		<img class="wiki-logo" src="/images/womenswiki-icon.png" alt="WomensWiki Icon">
+		<div class="text">
+			<h2>WomensWiki</h2>
+			<p>The Radical Feminist Wiki<br>exclusively by and for women</p>
+			<div class="stats">
+				<span><a href="/statistics">{articles.length > 0 ? articles.length : '???'}</a> articles</span>
+				<span><a href="/statistics">1</a> contributor</span>
+			</div>
 		</div>
 	</div>
-	<img src="/images/underconstruction.png" alt="Under Construction">
+	<img  class="construction" src="/images/underconstruction.png" alt="Under Construction">
 </section>
 <section>
 
@@ -35,11 +38,11 @@
 			<CategoryBox href="/wiki/radical_feminism" disabled>
 				<h3>Radical Feminism</h3>
 			</CategoryBox>
-			<CategoryBox href="/wiki/history" disabled>
-				<h3>Women in History</h3>
-			</CategoryBox>
 			<CategoryBox href="/wiki/media_literature" disabled>
 				<h3>Feminist Media & Literature</h3>
+			</CategoryBox>
+			<CategoryBox href="/wiki/contributing">
+				<h3>Contributing</h3>
 			</CategoryBox>
 			<CategoryBox href="/wiki/online_communities">
 				<h3>Online Communities</h3>
@@ -74,17 +77,32 @@
 </div>
 
 <style>
-	.center {
+	.header {
 		display: flex;
-		justify-content: center;
+		/* justify-content: space-between; */
 		align-items: center;
-		gap: 2rem;
+		gap: 4rem;
 		margin-bottom: 2rem;
+
+		.intro {
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+
+			h2 {
+				font-weight: 700;
+			}
+		}
+
+		img.wiki-logo {
+			height: 96px;
+		}
+
+		img.construction {
+			height: 64px;
+		}
 	}
 
-	.center img {
-		max-width: 180px;
-	}
 
 	.text { 
 		h2 {
@@ -133,13 +151,16 @@
 	.latest-articles {
 		overflow-y: auto;
 	}
-
 	@media (max-width: 450px) {
 		.center {
 			flex-direction: column;
 		}
 	}
 	@media (max-width: 700px) {
+		.header {
+			flex-direction: column;
+  			gap: 1rem;
+		}
 		.content {
 			grid-template-columns: 1fr;
 		}
