@@ -65,7 +65,7 @@ pre, code {
 
 a,
 a:visited {
-	color: inherit;
+	color: var(--color-primary);
 	text-decoration: none;
 	
 	&:hover {

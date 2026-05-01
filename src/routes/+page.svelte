@@ -35,7 +35,7 @@
 			<CategoryBox href="/wiki/about_womenswiki">
 				<h3>About WomensWiki</h3>
 			</CategoryBox>
-			<CategoryBox href="/wiki/radical_feminism" disabled>
+			<CategoryBox href="/wiki/radical_feminism">
 				<h3>Radical Feminism</h3>
 			</CategoryBox>
 			<CategoryBox href="/wiki/media_literature" disabled>
