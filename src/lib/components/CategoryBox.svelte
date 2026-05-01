@@ -21,13 +21,14 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0.75rem 1rem;
-        border: 2px solid var(--color-primary-light);
+        padding: 1rem;
+        border-bottom: 2px solid var(--color-primary-light);
+        transition: all 0.15s ease-in;
 
 
         &:hover {
             color: var(--color-primary-dark);
-            border-color: var(--color-primary)
+            background-color: var(--color-primary-light);
         }
 
         &.disabled {
